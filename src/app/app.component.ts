@@ -13,7 +13,8 @@ import { HomePage } from '../pages/home/home';
 export class MyApp {
     @ViewChild(Nav) nav: Nav;
 
- 	rootPage:any = HomePage;
+ 	// rootPage:any = HomePage;
+ 	rootPage:any;
 
 	storedData: Map<string, string[]>;
 
