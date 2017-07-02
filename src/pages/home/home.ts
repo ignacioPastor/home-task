@@ -43,9 +43,9 @@ export class HomePage {
         }
         for(let i=0; i<n; i++){
             if(negative)
-                this.storedData.get("task").unshift(this.storedData.get("task").pop());
+                this.storedData.get("houseMates").unshift(this.storedData.get("houseMates").pop());
             else
-                this.storedData.get("task").push(this.storedData.get("task").shift());
+                this.storedData.get("houseMates").push(this.storedData.get("houseMates").shift());
         }
     }
 
