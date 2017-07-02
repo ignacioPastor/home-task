@@ -17,11 +17,8 @@ export class HomePage {
     variationWeek: number = 0;  // manage if we are showing the next or following weeks (+1 and so on), or previous week (-1 and so on)
 
     constructor(public navCtrl: NavController, public navParams: NavParams) {
-        console.log("homeConstructor--------------------1");
-        // this.taskDistribution = this.navParams.get("taskDistribution");
-        this.storeData(); // develop mode
-        console.log("homeConstructor--------------------2");
-        console.log(this.taskDistribution);
+        this.taskDistribution = this.navParams.get("taskDistribution");
+        //this.storeData(); // develop mode
     }
 
     // lifeCicle, enters on view load
@@ -29,11 +26,7 @@ export class HomePage {
         this.today = new Date();
         this.numberThisWeek = this.getWeek();   // get the number of current week
         this.rotateTask(this.numberThisWeek - 1 + this.variationWeek);   // Asign the rotation to this week considering the asignation of week number 1
-        // this.taskDistribution.setAdjustedHouseMates();
         this.showPeriodWeek();
-        console.log("");
-        console.log("end_ionViewDidLoad");
-        console.log(this.taskDistribution);
     }
 
     // show the date of monday and the date of sunday of current week
@@ -41,11 +34,6 @@ export class HomePage {
         this.dateWeekInit = this.getDateOfWeek(this.numberThisWeek + this.variationWeek, this.today.getFullYear());
         this.dateWeekEnd = this.getDateOfWeek(this.numberThisWeek  + this.variationWeek, this.today.getFullYear());
         this.dateWeekEnd.setDate(this.dateWeekEnd.getDate() + 6);
-    }
-
-    getHouseMate(index: number){
-        console.log("getHouseMate, index: " + index);
-        
     }
 
     // iterate "n" times the tasks in adequate direction
@@ -99,8 +87,8 @@ export class HomePage {
         return new Date(y, 0, d);
     }
 
+    // dev mode
     private storeData(){
-		console.log("storeDataFunction-----------------1");
 		let myTasks: string[] = ["task_1", "task_2", "task_3", "task_4", "task_5", "task_6"];
 		let myHouseMates: string[] = ["homemate_1", "homemate_2", "homemate_3"];
 		this.taskDistribution = new TaskDistribution({tasks: myTasks, houseMates: myHouseMates});

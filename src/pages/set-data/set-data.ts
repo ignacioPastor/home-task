@@ -21,23 +21,20 @@ export class SetData {
 	errorInfo: string = "";
 
 	constructor(public navCtrl: NavController, public navParams: NavParams) {
-		console.log("constructor ser-data");
 		this.taskDistribution = new TaskDistribution(null);
 	}
 
 	ionViewDidLoad() {
-		console.log('ionViewDidLoad SetData');
+		
 	}
 
 	// delete the last item added to the array
 	onClickLess(){
-		console.log("onClickLess()");
 		this.arrayData.pop();
 	}
 
 	// Check if inputData it's filled, if true, add item to arrayData
 	onClickMore(){
-		console.log("onClickMore()");
 		if(this.myData == ""){
 			this.errorInfo = "Write a name";
 		}else{
@@ -48,37 +45,49 @@ export class SetData {
 
 	// Delete posible errorInfo message
 	onFocusInput(){
-		console.log("onFocusInput()");
 		this.errorInfo = "";
 	}
 
 	// onClick finnish button, if we are in homemate assign arrayData to houseMates and change mode to task
 	// if mode is task, assign arrayData to houseMates and adjust the data
 	finnish(){
-		console.log("finnis()");
 		if(this.mode == "homemate"){
 			this.taskDistribution.houseMates = this.arrayData.slice();
 			this.mode = "task";
 			this.arrayData = [];
+			this.myData = "";
 		}else if(this.mode == "task"){
 			this.taskDistribution.tasks = this.arrayData.slice();
 			this.adjustData();
+			this.randomizeAssignations();
+			this.navCtrl.push(HomePage, {taskDistribution: this.taskDistribution});
+			// store data in the device and in database
 		}
-		console.log(this.taskDistribution);
-		
 	}
 
-	// Complete arrays in case task.length != houseMate.length 
+	// if there are more houseMates than task, complete with "Rest" tasks distribuites along of the array
 	adjustData(){
-		console.log("adjustData");
-		if(this.taskDistribution.houseMates.length > this.taskDistribution.tasks.length){
-			console.log("adjustData_MoreHouseMates");
+		let dif = this.taskDistribution.houseMates.length - this.taskDistribution.tasks.length;
+        let first: Boolean = false;
+		if(dif > 0){
+			let pos = Math.trunc(this.taskDistribution.tasks.length / (dif==1?dif+1:dif));
 			while(this.taskDistribution.houseMates.length > this.taskDistribution.tasks.length){
-				this.taskDistribution.tasks.push("Rest");
+				this.taskDistribution.tasks.splice(pos<this.taskDistribution.tasks.length?pos:this.taskDistribution.tasks.length, 0, "Rest");
+			
+                pos += pos;
+                if(!first){
+                    first = true;
+                    pos++;
+                }
 			}
 		}
-		console.log(this.taskDistribution);
-		this.navCtrl.push(HomePage, {taskDistribution: this.taskDistribution});
 	}
 
+	// reorders in random way the assignations of tasks
+	randomizeAssignations(){
+		let n: number = Math.floor((Math.random() * 20) + 1);
+		for(let i=0; i<n; i++){
+			this.taskDistribution.houseMates.unshift(this.taskDistribution.houseMates.pop());
+        }
+	}
 }

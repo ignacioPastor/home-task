@@ -9,12 +9,14 @@ import { IonicStorageModule } from '@ionic/storage';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { SetData } from '../pages/set-data/set-data';
+import { SetDataAssigned } from '../pages/set-data-assigned/set-data-assigned';
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
-    SetData
+    SetData,
+    SetDataAssigned
   ],
   imports: [
     BrowserModule,
@@ -25,7 +27,8 @@ import { SetData } from '../pages/set-data/set-data';
   entryComponents: [
     MyApp,
     HomePage,
-    SetData
+    SetData,
+    SetDataAssigned
   ],
   providers: [
     StatusBar,
