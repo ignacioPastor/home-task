@@ -36,13 +36,13 @@ export class HomePage {
 
     // iterate "n" times the tasks in adequate direction
     rotateTask(n: number){
-        let negative: Boolean = false;
+        let positive: Boolean = true;
         if(n < 0){
             n*=-1;
-            negative = true;
+            positive = false;
         }
         for(let i=0; i<n; i++){
-            if(negative)
+            if(positive)
                 this.storedData.get("houseMates").unshift(this.storedData.get("houseMates").pop());
             else
                 this.storedData.get("houseMates").push(this.storedData.get("houseMates").shift());
