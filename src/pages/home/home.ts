@@ -18,7 +18,8 @@ export class HomePage {
 
     constructor(public navCtrl: NavController, public navParams: NavParams) {
         console.log("homeConstructor--------------------1");
-        this.taskDistribution = this.navParams.get("storedData");
+        // this.taskDistribution = this.navParams.get("taskDistribution");
+        this.storeData(); // develop mode
         console.log("homeConstructor--------------------2");
         console.log(this.taskDistribution);
     }
@@ -28,7 +29,11 @@ export class HomePage {
         this.today = new Date();
         this.numberThisWeek = this.getWeek();   // get the number of current week
         this.rotateTask(this.numberThisWeek - 1 + this.variationWeek);   // Asign the rotation to this week considering the asignation of week number 1
+        // this.taskDistribution.setAdjustedHouseMates();
         this.showPeriodWeek();
+        console.log("");
+        console.log("end_ionViewDidLoad");
+        console.log(this.taskDistribution);
     }
 
     // show the date of monday and the date of sunday of current week
@@ -38,7 +43,13 @@ export class HomePage {
         this.dateWeekEnd.setDate(this.dateWeekEnd.getDate() + 6);
     }
 
+    getHouseMate(index: number){
+        console.log("getHouseMate, index: " + index);
+        
+    }
+
     // iterate "n" times the tasks in adequate direction
+    // adjust the houseMatesToShow
     rotateTask(n: number){
         let positive: Boolean = true;
         if(n < 0){
@@ -51,6 +62,7 @@ export class HomePage {
             else
                 this.taskDistribution.houseMates.push(this.taskDistribution.houseMates.shift());
         }
+        this.taskDistribution.setAdjustedHouseMates();
     }
 
     // onClick in next button show the distribution to the previous week to shown week
@@ -86,5 +98,12 @@ export class HomePage {
         d++; // error detected in the function, day must be increased in one
         return new Date(y, 0, d);
     }
+
+    private storeData(){
+		console.log("storeDataFunction-----------------1");
+		let myTasks: string[] = ["task_1", "task_2", "task_3", "task_4", "task_5", "task_6"];
+		let myHouseMates: string[] = ["homemate_1", "homemate_2", "homemate_3"];
+		this.taskDistribution = new TaskDistribution({tasks: myTasks, houseMates: myHouseMates});
+	}
 
 }

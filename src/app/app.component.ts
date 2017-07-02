@@ -8,6 +8,7 @@ import { Storage } from '@ionic/storage';
 import { TaskDistribution } from "./../models/TaskDistribution";
 
 import { HomePage } from '../pages/home/home';
+import { SetData } from '../pages/set-data/set-data'
 @Component({
 	templateUrl: 'app.html'
 })
@@ -17,23 +18,28 @@ export class MyApp {
  	// rootPage:any = HomePage;
  	rootPage:any;
 
-	storedData: TaskDistribution;
+	taskDistribution: TaskDistribution;
 
 	constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private storage: Storage,
 			private alertCtrl: AlertController) {
+		console.log("app.component_constructor---------1");
 		platform.ready().then(() => {
 			statusBar.styleDefault();
 
 			this.storage.ready().then(() => {
-				this.storage.get('storedData').then(data => {
+				this.storage.get('taskDistribution').then(data => {
 					splashScreen.hide();
 					if(data){
-						//this.storedData = data;	// in the future charge data from stored data (think how parse from string)
-						this.storeData();
+		console.log("app.component_constructor---------2");
+						this.taskDistribution = data;	// in the future charge data from stored data (think how parse from string)
+						this.nav.setRoot(HomePage, {taskDistribution: this.taskDistribution});
 					}else{
-						this.storeData();
+		console.log("app.component_constructor---------3");
+						// this.nav.setRoot(SetData);
+						this.nav.setRoot(HomePage);
+						//this.storeData();
 					}
-					this.nav.setRoot(HomePage, {storedData: this.storedData});
+					
 				})
 			})
 		});
@@ -41,15 +47,11 @@ export class MyApp {
 
 	private storeData(){
 		console.log("storeDataFunction-----------------1");
-        // this.storedData = new Map<string, string[]>();
 		let myTasks: string[] = ["Kitchen", "Downstairs bathroom", "Rest", "Living room", "Upstairs bathroom"];
 		let myHouseMates: string[] = ["Ignacio", "Carol", "Mari Carmen", "Javi", "Yahir"];
-		this.storedData = new TaskDistribution({tasks: myTasks, houseMates: myHouseMates});
+		this.taskDistribution = new TaskDistribution({tasks: myTasks, houseMates: myHouseMates});
 		console.log("storeDataFunction-----------------2");
-		console.log(this.storedData);
-		// this.storedData.set("task", task);
-		// this.storedData.set("houseMates", houseMates);
-		//this.storage.setItem("storedData", this.storedData.toString());
+		console.log(this.taskDistribution);
 	}
 
 	public showErrorPopup(message: string) {

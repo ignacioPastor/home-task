@@ -1,0 +1,30 @@
+
+<ion-header>
+
+	<ion-navbar>
+		<ion-title>Add Data</ion-title>
+	</ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+	<ion-list>
+		<ion-item *ngFor="let dat of arrayData; let i = index;">
+			
+    		{{arrayData[i]}}
+		</ion-item>
+		
+	</ion-list>
+	<ion-item>
+		<ion-label color="primary" floating>Add {{mode}}</ion-label>
+		<ion-input type="text" [(ngModel)]="myData" (focus)="onFocusInput()"></ion-input>
+	</ion-item>
+	<div class="buttonsWrapper">
+		<button ion-button (click)="onClickLess()">-</button>
+		<p *ngIf="errorInfo">{{errorInfo}}</p>
+		<button ion-button (click)="onClickMore()">+</button>
+	</div>
+	<button ion-button (click)="finnish()">Finnish</button>
+
+</ion-content>
