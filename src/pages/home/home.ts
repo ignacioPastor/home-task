@@ -8,35 +8,59 @@ import { NavController, NavParams } from 'ionic-angular';
 export class HomePage {
 
     storedData: Map<string, string[]>;
-    nWeek: number = 26;
     today: Date;
     numberThisWeek;
     dateWeekInit;
     dateWeekEnd;
 
+    variationWeek: number = 0;  // manage if we are showing the next or following weeks (+1 and so on), or previous week (-1 and so on)
+
     constructor(public navCtrl: NavController, public navParams: NavParams) {
-        console.log("home----------------------1");
         this.storedData = this.navParams.get("storedData");
-        console.log("home----------------------2");
-        console.log(this.storedData);
-        
     }
 
+    // lifeCicle, enters on view load
     ionViewDidLoad() {
-        console.log('ionViewDidLoad');
         this.today = new Date();
-        this.numberThisWeek = this.getWeek();
-        this.dateWeekInit = this.getDateOfWeek(this.numberThisWeek, 2017);
-        this.dateWeekEnd = this.getDateOfWeek(this.numberThisWeek, 2017);
+        this.numberThisWeek = this.getWeek();   // get the number of current week
+        this.rotateTask(this.numberThisWeek - 1 + this.variationWeek);   // Asign the rotation to this week considering the asignation of week number 1
+        this.showPeriodWeek();
+    }
+
+    // show the date of monday and the date of sunday of current week
+    showPeriodWeek(){
+        this.dateWeekInit = this.getDateOfWeek(this.numberThisWeek + this.variationWeek, this.today.getFullYear());
+        this.dateWeekEnd = this.getDateOfWeek(this.numberThisWeek  + this.variationWeek, this.today.getFullYear());
         this.dateWeekEnd.setDate(this.dateWeekEnd.getDate() + 6);
     }
 
-    onClickPrev(){
-        console.log("onClickPrev()");
+    // iterate "n" times the tasks in adequate direction
+    rotateTask(n: number){
+        let negative: Boolean = false;
+        if(n < 0){
+            n*=-1;
+            negative = true;
+        }
+        for(let i=0; i<n; i++){
+            if(negative)
+                this.storedData.get("task").unshift(this.storedData.get("task").pop());
+            else
+                this.storedData.get("task").push(this.storedData.get("task").shift());
+        }
     }
 
+    // onClick in next button show the distribution to the previous week to shown week
+    onClickPrev(){
+        this.variationWeek--;
+        this.rotateTask(-1);
+        this.showPeriodWeek();
+    }
+
+    // onClick in next button show the distribution to the next week to shown week
     onClickNext(){
-        console.log("onClickNext()");
+        this.variationWeek++;
+        this.rotateTask(1);
+        this.showPeriodWeek();
     }
 
     // Return the number of the current week
@@ -52,12 +76,7 @@ export class HomePage {
                             - 3 + (week1.getDay() + 6) % 7) / 7);
     }
 
-    getDateFromWeek() {
-        var date = new Date();
-        date.setDate(date.getDate() + 3 - (date.getDay() + 6) % 7);
-        return date.getFullYear();
-    }
-
+    // get the date of monday of given week "w" of given year "y"
     getDateOfWeek(w, y) {
         var d = (1 + (w - 1) * 7); // 1st of January + 7 days for each week
         d++; // error detected in the function, day must be increased in one
