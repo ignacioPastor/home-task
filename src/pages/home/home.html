@@ -7,12 +7,13 @@
 </ion-header>
 
 <ion-content padding>
+	<p>New Version</p>
 	<p>Today: {{today | date:'dd/MM/yyyy'}}</p>
 	<p>{{dateWeekInit | date:'dd/MM/yyyy'}} - {{dateWeekEnd | date:'dd/MM/yyyy'}}</p>
 	<ion-list>
-		<ion-item *ngFor="let task of storedData.get('task'); let i = index">
-			<div class="taskClass">{{storedData.get('task')[i]}}:</div>
-			<div class="houseMateClass">{{storedData.get('houseMates')[i]}}</div>
+		<ion-item *ngFor="let task of taskDistribution.tasks; let i = index">
+			<div class="taskClass">{{taskDistribution.tasks[i]}}:</div>
+			<div class="houseMateClass">{{taskDistribution.houseMates[i]}}</div>
 		</ion-item>
 	</ion-list>
 	<div class="buttonsWrapper">

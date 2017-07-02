@@ -1,13 +1,15 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
+import { TaskDistribution } from "./../../models/TaskDistribution";
+
 @Component({
     selector: 'page-home',
     templateUrl: 'home.html'
 })
 export class HomePage {
 
-    storedData: Map<string, string[]>;  // map where stored the two array with data
+    taskDistribution: TaskDistribution;  // map where stored the two array with data
     today: Date;
     numberThisWeek; // number of current week
     dateWeekInit;  // date of Monday current week
@@ -15,7 +17,10 @@ export class HomePage {
     variationWeek: number = 0;  // manage if we are showing the next or following weeks (+1 and so on), or previous week (-1 and so on)
 
     constructor(public navCtrl: NavController, public navParams: NavParams) {
-        this.storedData = this.navParams.get("storedData");
+        console.log("homeConstructor--------------------1");
+        this.taskDistribution = this.navParams.get("storedData");
+        console.log("homeConstructor--------------------2");
+        console.log(this.taskDistribution);
     }
 
     // lifeCicle, enters on view load
@@ -42,9 +47,9 @@ export class HomePage {
         }
         for(let i=0; i<n; i++){
             if(positive)
-                this.storedData.get("houseMates").unshift(this.storedData.get("houseMates").pop());
+                this.taskDistribution.houseMates.unshift(this.taskDistribution.houseMates.pop());
             else
-                this.storedData.get("houseMates").push(this.storedData.get("houseMates").shift());
+                this.taskDistribution.houseMates.push(this.taskDistribution.houseMates.shift());
         }
     }
 

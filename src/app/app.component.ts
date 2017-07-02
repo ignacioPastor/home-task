@@ -5,6 +5,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { AlertController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 
+import { TaskDistribution } from "./../models/TaskDistribution";
 
 import { HomePage } from '../pages/home/home';
 @Component({
@@ -16,7 +17,7 @@ export class MyApp {
  	// rootPage:any = HomePage;
  	rootPage:any;
 
-	storedData: Map<string, string[]>;
+	storedData: TaskDistribution;
 
 	constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private storage: Storage,
 			private alertCtrl: AlertController) {
@@ -39,11 +40,15 @@ export class MyApp {
 	}
 
 	private storeData(){
-        this.storedData = new Map<string, string[]>();
-		let task: string[] = ["Kitchen", "Downstairs bathroom", "Rest", "Living room", "Upstairs bathroom"];
-		let houseMates: string[] = ["Ignacio", "Carol", "Mari Carmen", "Javi", "Yahir"];
-		this.storedData.set("task", task);
-		this.storedData.set("houseMates", houseMates);
+		console.log("storeDataFunction-----------------1");
+        // this.storedData = new Map<string, string[]>();
+		let myTasks: string[] = ["Kitchen", "Downstairs bathroom", "Rest", "Living room", "Upstairs bathroom"];
+		let myHouseMates: string[] = ["Ignacio", "Carol", "Mari Carmen", "Javi", "Yahir"];
+		this.storedData = new TaskDistribution({tasks: myTasks, houseMates: myHouseMates});
+		console.log("storeDataFunction-----------------2");
+		console.log(this.storedData);
+		// this.storedData.set("task", task);
+		// this.storedData.set("houseMates", houseMates);
 		//this.storage.setItem("storedData", this.storedData.toString());
 	}
 
