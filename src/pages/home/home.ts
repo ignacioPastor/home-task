@@ -7,12 +7,11 @@ import { NavController, NavParams } from 'ionic-angular';
 })
 export class HomePage {
 
-    storedData: Map<string, string[]>;
+    storedData: Map<string, string[]>;  // map where stored the two array with data
     today: Date;
-    numberThisWeek;
-    dateWeekInit;
-    dateWeekEnd;
-
+    numberThisWeek; // number of current week
+    dateWeekInit;  // date of Monday current week
+    dateWeekEnd;    // date of Sunday current week
     variationWeek: number = 0;  // manage if we are showing the next or following weeks (+1 and so on), or previous week (-1 and so on)
 
     constructor(public navCtrl: NavController, public navParams: NavParams) {
