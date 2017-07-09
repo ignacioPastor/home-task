@@ -10,13 +10,15 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { SetData } from '../pages/set-data/set-data';
 import { SetDataAssigned } from '../pages/set-data-assigned/set-data-assigned';
+import { ToggleTypeSetData } from '../pages/toggle-type-set-data/toggle-type-set-data';
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
     SetData,
-    SetDataAssigned
+    SetDataAssigned,
+    ToggleTypeSetData
   ],
   imports: [
     BrowserModule,
@@ -28,7 +30,8 @@ import { SetDataAssigned } from '../pages/set-data-assigned/set-data-assigned';
     MyApp,
     HomePage,
     SetData,
-    SetDataAssigned
+    SetDataAssigned,
+    ToggleTypeSetData
   ],
   providers: [
     StatusBar,

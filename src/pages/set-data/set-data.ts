@@ -51,12 +51,12 @@ export class SetData {
 	// onClick finnish button, if we are in homemate assign arrayData to houseMates and change mode to task
 	// if mode is task, assign arrayData to houseMates and adjust the data
 	finnish(){
-		if(this.mode == "homemate"){
+		if(this.mode == "homemate" && this.arrayData.length > 0){
 			this.taskDistribution.houseMates = this.arrayData.slice();
 			this.mode = "task";
 			this.arrayData = [];
 			this.myData = "";
-		}else if(this.mode == "task"){
+		}else if(this.mode == "task" && this.arrayData.length > 0){
 			this.taskDistribution.tasks = this.arrayData.slice();
 			this.adjustData();
 			this.randomizeAssignations();

@@ -8,8 +8,10 @@ import { Storage } from '@ionic/storage';
 import { TaskDistribution } from "./../models/TaskDistribution";
 
 import { HomePage } from '../pages/home/home';
-import { SetData } from '../pages/set-data/set-data'
-import { SetDataAssigned } from '../pages/set-data-assigned/set-data-assigned'
+import { SetData } from '../pages/set-data/set-data';
+import { SetDataAssigned } from '../pages/set-data-assigned/set-data-assigned';
+import { ToggleTypeSetData } from '../pages/toggle-type-set-data/toggle-type-set-data';
+
 @Component({
 	templateUrl: 'app.html'
 })
@@ -32,7 +34,7 @@ export class MyApp {
 						this.taskDistribution = data;	// in the future charge data from stored data (think how parse from string)
 						this.nav.setRoot(HomePage, {taskDistribution: this.taskDistribution});
 					}else{
-						this.nav.setRoot(SetDataAssigned);
+						this.nav.setRoot(ToggleTypeSetData);
 					}
 					
 				})
