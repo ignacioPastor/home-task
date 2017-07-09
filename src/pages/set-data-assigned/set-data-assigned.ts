@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Storage } from '@ionic/storage';
 
 import { TaskDistribution } from "./../../models/TaskDistribution";
 import { HomePage } from "./../home/home";
@@ -18,39 +19,35 @@ export class SetDataAssigned {
 	errorInfo: string = "";
 	numberThisWeek: number;
 
-	constructor(public navCtrl: NavController, public navParams: NavParams) {
+	constructor(public navCtrl: NavController, public navParams: NavParams, private storage: Storage) {
 		this.taskDistribution = new TaskDistribution(null);
 	}
 
 	// lifeCicleFunction, enter when all contents has been charged
 	ionViewDidLoad() {
-		console.log('ionViewDidLoad SetDataAssignedPage');
 		this.numberThisWeek = this.getWeek();
 	}
 
 	// remove the las content added to the taskDistribution
 	onClickLess(){
-		console.log("onClickLess()");
 		this.taskDistribution.tasks.pop();
 		this.taskDistribution.houseMates.pop();
 	}
 
 	// add current content, and prepare the data to add another content
 	onClickMore(){
-		console.log("onClickMore()");
 		this.addContent(true);
 	}
 
 	// onClick finnish, store data and change window
 	finnish(){
-		console.log("finnish()");
 		this.addContent(false);
 		if(this.taskDistribution.houseMates.length == 0){
 			this.errorInfo = "Fill content";
 		}else{
 			this.assignWeekOneDistribution(this.taskDistribution.houseMates.slice());
 			
-			// store taskDistribution in the device and in database
+			this.storage.set('taskDistribution', this.taskDistribution);
 			this.navCtrl.push(HomePage, {taskDistribution: this.taskDistribution});
 		}
 	}
@@ -102,7 +99,6 @@ export class SetDataAssigned {
 
 	// onFocus in input to enter a new task or new homemate, clean the error message
 	onFocusInput(){
-		console.log("onFocusInput()");
 		this.errorInfo = "";
 	}
 

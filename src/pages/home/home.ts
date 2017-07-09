@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, Platform } from 'ionic-angular';
 
 import { TaskDistribution } from "./../../models/TaskDistribution";
 
@@ -16,9 +16,19 @@ export class HomePage {
     dateWeekEnd;    // date of Sunday current week
     variationWeek: number = 0;  // manage if we are showing the next or following weeks (+1 and so on), or previous week (-1 and so on)
 
-    constructor(public navCtrl: NavController, public navParams: NavParams) {
-        this.taskDistribution = this.navParams.get("taskDistribution");
-        //this.storeData(); // develop mode
+    constructor(private platform: Platform, public navCtrl: NavController, public navParams: NavParams) {
+        this.taskDistribution = new TaskDistribution(this.navParams.get("taskDistribution"));
+
+        // if this is the main window, goBack means close the app
+        this.platform.registerBackButtonAction(() => {
+            if(this.navCtrl.getActive().component == HomePage) {
+                this.platform.exitApp();
+            }
+            else {
+                this.navCtrl.pop();
+            }
+        });
+        
     }
 
     // lifeCicle, enters on view load
@@ -93,5 +103,7 @@ export class HomePage {
 		let myHouseMates: string[] = ["homemate_1", "homemate_2", "homemate_3"];
 		this.taskDistribution = new TaskDistribution({tasks: myTasks, houseMates: myHouseMates});
 	}
+
+    
 
 }

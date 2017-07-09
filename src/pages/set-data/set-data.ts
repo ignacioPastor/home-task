@@ -1,9 +1,9 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Nav, Platform } from 'ionic-angular';
+import { Storage } from '@ionic/storage';
 
 import { TaskDistribution } from "./../../models/TaskDistribution";
-
 import { HomePage } from "./../home/home";
 
 
@@ -20,7 +20,7 @@ export class SetData {
 	myData: string = "";
 	errorInfo: string = "";
 
-	constructor(public navCtrl: NavController, public navParams: NavParams) {
+	constructor(public navCtrl: NavController, public navParams: NavParams, private storage: Storage) {
 		this.taskDistribution = new TaskDistribution(null);
 	}
 
@@ -61,7 +61,11 @@ export class SetData {
 			this.adjustData();
 			this.randomizeAssignations();
 			this.navCtrl.push(HomePage, {taskDistribution: this.taskDistribution});
-			// store data in the device and in database
+			
+			console.log("previous store in set-data");
+			console.log("this.taskDistribution");
+			console.log(this.taskDistribution);
+			this.storage.set('taskDistribution', this.taskDistribution);
 		}
 	}
 
