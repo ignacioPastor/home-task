@@ -17,7 +17,7 @@
 	</ion-list>
 	<ion-item>
 		<ion-label color="primary" floating>Add homemate</ion-label>
-		<ion-input type="text" [(ngModel)]="myHomemate" (ionFocus)="onFocusInput()"></ion-input>
+		<ion-input #focusInput type="text" [(ngModel)]="myHomemate" (ionFocus)="onFocusInput()"></ion-input>
 	</ion-item>
 	<ion-item>
 		<ion-label color="primary" floating>Add task</ion-label>

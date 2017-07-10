@@ -5,6 +5,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { Storage } from '@ionic/storage';
 import { IonicStorageModule } from '@ionic/storage';
+import { Keyboard } from '@ionic-native/keyboard';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -36,6 +37,7 @@ import { ToggleTypeSetData } from '../pages/toggle-type-set-data/toggle-type-set
   providers: [
     StatusBar,
     SplashScreen,
+    Keyboard,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

@@ -6,6 +6,7 @@ import { Storage } from '@ionic/storage';
 import { TaskDistribution } from "./../../models/TaskDistribution";
 import { HomePage } from "./../home/home";
 
+import { Keyboard } from '@ionic-native/keyboard';
 
 @IonicPage()
 @Component({
@@ -14,18 +15,26 @@ import { HomePage } from "./../home/home";
 })
 export class SetData {
 
+	@ViewChild('focusInput') myInput ;
+
 	taskDistribution: TaskDistribution;
 	arrayData: string[] = []; // take the data entered by the user
 	mode: string = "homemate";
 	myData: string = "";
 	errorInfo: string = "";
 
-	constructor(public navCtrl: NavController, public navParams: NavParams, private storage: Storage) {
+	constructor(public navCtrl: NavController, public navParams: NavParams, private storage: Storage, private keyboard: Keyboard) {
 		this.taskDistribution = new TaskDistribution(null);
 	}
 
-	ionViewDidLoad() {
-		
+	ionViewDidEnter() {
+	}
+
+	// put the focus in the input field
+	putFocus(){
+		//https://stackoverflow.com/questions/39612653/set-focus-on-an-input-with-ionic-2
+			this.myInput.setFocus();
+			this.keyboard.show(); // for android
 	}
 
 	// delete the last item added to the array
@@ -41,6 +50,7 @@ export class SetData {
 			this.arrayData.push(this.myData);
 			this.myData = "";
 		}
+		this.putFocus();
 	}
 
 	// Delete posible errorInfo message
@@ -51,6 +61,11 @@ export class SetData {
 	// onClick finnish button, if we are in homemate assign arrayData to houseMates and change mode to task
 	// if mode is task, assign arrayData to houseMates and adjust the data
 	finnish(){
+		if(this.myData != ""){
+			this.arrayData.push(this.myData);
+			this.myData = "";
+		}
+		
 		if(this.mode == "homemate" && this.arrayData.length > 0){
 			this.taskDistribution.houseMates = this.arrayData.slice();
 			this.mode = "task";
@@ -62,9 +77,6 @@ export class SetData {
 			this.randomizeAssignations();
 			this.navCtrl.push(HomePage, {taskDistribution: this.taskDistribution});
 			
-			console.log("previous store in set-data");
-			console.log("this.taskDistribution");
-			console.log(this.taskDistribution);
 			this.storage.set('taskDistribution', this.taskDistribution);
 		}
 	}

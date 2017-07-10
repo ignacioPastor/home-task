@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
+import { Keyboard } from '@ionic-native/keyboard';
 
 import { TaskDistribution } from "./../../models/TaskDistribution";
 import { HomePage } from "./../home/home";
@@ -13,13 +14,15 @@ import { HomePage } from "./../home/home";
 })
 export class SetDataAssigned {
 
+	@ViewChild('focusInput') myInput ;
+
   	taskDistribution: TaskDistribution;
 	myTask: string = "";
 	myHomemate: string = "";
 	errorInfo: string = "";
 	numberThisWeek: number;
 
-	constructor(public navCtrl: NavController, public navParams: NavParams, private storage: Storage) {
+	constructor(public navCtrl: NavController, public navParams: NavParams, private storage: Storage, private keyboard: Keyboard) {
 		this.taskDistribution = new TaskDistribution(null);
 	}
 
@@ -36,7 +39,8 @@ export class SetDataAssigned {
 
 	// add current content, and prepare the data to add another content
 	onClickMore(){
-		this.addContent(true);
+		if(this.addContent(true))
+			this.putInput();
 	}
 
 	// onClick finnish, store data and change window
@@ -79,14 +83,17 @@ export class SetDataAssigned {
 	}
 
 	// if there are no errors, add the new task and the new houseMate
-	addContent(notifyError: Boolean){
+	// return true if content added
+	addContent(notifyError: Boolean): Boolean{
 		if(this.checkErrors()){
 			this.taskDistribution.houseMates.push(this.myHomemate);
 			this.taskDistribution.tasks.push(this.myTask);
 			this.myHomemate = "";
 			this.myTask = "";
+			return true;
 		}else{
 			if(notifyError) this.errorInfo = "Fill the content";
+			return false;
 		}
 	}
 
@@ -115,6 +122,12 @@ export class SetDataAssigned {
         return 1 + Math.round(((date.getTime() - week1.getTime()) / 86400000
                             - 3 + (week1.getDay() + 6) % 7) / 7);
     }
+
+	putInput(){
+		//https://stackoverflow.com/questions/39612653/set-focus-on-an-input-with-ionic-2
+			this.myInput.setFocus();
+			this.keyboard.show(); // for android
+	}
 
 }
 
