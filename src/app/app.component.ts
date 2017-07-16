@@ -43,7 +43,7 @@ export class MyApp {
 		console.log("storeDataFunction-----------------1");
         // this.storedData = new Map<string, string[]>();
 		let myTasks: string[] = ["Kitchen", "Downstairs bathroom", "Rest", "Living room", "Upstairs bathroom"];
-		let myHouseMates: string[] = ["Ignacio", "Carol", "Mari Carmen", "Javi", "Yahir"];
+		let myHouseMates: string[] = ["Ignacio", "Carol", "Mari Carmen", "Javi", "Tomasz"];
 		this.storedData = new TaskDistribution({tasks: myTasks, houseMates: myHouseMates});
 		console.log("storeDataFunction-----------------2");
 		console.log(this.storedData);

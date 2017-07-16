@@ -29,12 +29,26 @@ export class HomePage {
         this.numberThisWeek = this.getWeek();   // get the number of current week
         this.rotateTask(this.numberThisWeek - 1 + this.variationWeek);   // Asign the rotation to this week considering the asignation of week number 1
         this.showPeriodWeek();
+
+        this.adaptToSundays();
+
+    }
+
+    // Adapt the version to Sundays and
+    adaptToSundays(){
+        if(this.today.getDay() == 0){
+            this.showPeriodWeek(1);
+        }
+        this.dateWeekInit.setDate(this.dateWeekInit.getDate() - 1);
+        this.dateWeekEnd.setDate(this.dateWeekEnd.getDate() - 1);
+        
     }
 
     // show the date of monday and the date of sunday of current week
-    showPeriodWeek(){
-        this.dateWeekInit = this.getDateOfWeek(this.numberThisWeek + this.variationWeek, this.today.getFullYear());
-        this.dateWeekEnd = this.getDateOfWeek(this.numberThisWeek  + this.variationWeek, this.today.getFullYear());
+    showPeriodWeek(n?:number){
+        n=n?n:0;
+        this.dateWeekInit = this.getDateOfWeek(this.numberThisWeek + this.variationWeek+n, this.today.getFullYear());
+        this.dateWeekEnd = this.getDateOfWeek(this.numberThisWeek  + this.variationWeek+n, this.today.getFullYear());
         this.dateWeekEnd.setDate(this.dateWeekEnd.getDate() + 6);
     }
 
