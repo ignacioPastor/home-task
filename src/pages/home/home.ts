@@ -34,7 +34,7 @@ export class HomePage {
 
     }
 
-    // Adapt the version to Sundays and
+    // Adapt the version to Sundays
     adaptToSundays(){
         if(this.today.getDay() == 0){
             this.showPeriodWeek(1);
@@ -72,6 +72,8 @@ export class HomePage {
         this.variationWeek--;
         this.rotateTask(-1);
         this.showPeriodWeek();
+
+        this.adaptToSundays();
     }
 
     // onClick in next button show the distribution to the next week to shown week
@@ -79,6 +81,8 @@ export class HomePage {
         this.variationWeek++;
         this.rotateTask(1);
         this.showPeriodWeek();
+
+        this.adaptToSundays();
     }
 
     // Return the number of the current week
