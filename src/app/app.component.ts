@@ -18,7 +18,8 @@ import { ToggleTypeSetData } from '../pages/toggle-type-set-data/toggle-type-set
 export class MyApp {
     @ViewChild(Nav) nav: Nav;
 
- 	rootPage:any;
+ 	rootPage: any;
+    menuItems: Array<{ title, icon}>;
 
 	taskDistribution: TaskDistribution;
 
@@ -40,6 +41,23 @@ export class MyApp {
 				})
 			})
 		});
+
+		this.menuItems = [
+			{title: "Change Distribution", icon: "fa fa-pencil-square-o"},
+			{title: "New Distribution", icon: "fa fa-trash-o"}
+		]
+	}
+	onClickMenuItem(item: any){
+		console.log("onClickMenuItem()");
+		if(item.title == "Change Distribution") this.changeDistribution();
+		if(item.title == "New Distribution") this.newDistribution();
+	}
+	newDistribution(){
+		console.log("onClickNewDistribution()");
+	}
+
+	changeDistribution(){
+		console.log("onClickChangeDistribution()");
 	}
 }
 

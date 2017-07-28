@@ -24,7 +24,7 @@ import { ToggleTypeSetData } from '../pages/toggle-type-set-data/toggle-type-set
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
-    IonicStorageModule.forRoot(),
+    IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [

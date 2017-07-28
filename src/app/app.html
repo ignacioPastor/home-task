@@ -1,1 +1,33 @@
-<ion-nav [root]="rootPage"></ion-nav>
+<ion-menu [content]="content" persistent="true" type="push" side="right">
+  <div id="header">
+    <!-- <img src="assets/images/menuLogo.png" alt=""> -->
+  </div>
+
+  <div id="contentMenu">
+    <div class="item" menuClose *ngFor="let menuItem of menuItems" (click)="onClickMenuItem(menuItem)">
+      <div class="iconWrapper">
+        <!-- <i class="{{menuItem.icon}}" aria-hidden="true"></i> -->
+        <i class="fa fa-trash-o" aria-hidden="true"></i>
+      </div>
+      <span class="textMenu">{{menuItem.title}}</span>
+    </div>
+
+  </div>
+</ion-menu>
+
+
+<!-- Disable swipe-to-go-back because it's poor UX to combine STGB with side menus -->
+<ion-nav  id="myIonNav" [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>    
+
+<!-- 
+<ion-menu [content]="content" persistent="true" side="right">
+     <ion-content>
+        <ion-list>
+            <ion-item (click)="onClickNewDistribution()">New distribution</ion-item>
+            <ion-item menuClose detail-none (click)="onClickChangeDistribution()">Change distribution</ion-item>
+            <ion-item menuClose detail-none>Close Menu</ion-item>
+        </ion-list>
+    </ion-content>
+</ion-menu>
+
+<ion-nav [root]="rootPage"></ion-nav> -->

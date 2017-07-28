@@ -3,9 +3,10 @@
     <name>HomeTask</name>
     <description>App to distribute the home tasks between housemates</description>
     <author email="ignacio.past@gmail.com" href="http://ionicframework.com/">Ignacio Pastor</author>
-    <content src="index.html" />
+    <content original-src="index.html" src="http://192.168.0.206:8100" />
     <access origin="*" />
     <allow-navigation href="http://ionic.local/*" />
+    <allow-navigation href="http://192.168.0.206:8100" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
     <allow-intent href="tel:*" />

@@ -14,3 +14,43 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+
+
+ion-menu{
+    border: 2px solid red;
+    width: 60% !important;
+    position: absolute !important;
+    left: 40%;
+    .menu-inner{
+            width: 100% !important;
+            border: 2px solid purple;
+        #contentMenu{
+            display: flex;
+            flex-direction: column;
+            .item{
+                border: 1px solid blue;
+                display: flex;
+                padding: 10px;
+
+                .iconWrapper{
+                    border: 1px solid green;
+                    width: 20px;
+                    height: 20px;
+                }
+                .textMenu{
+                    font-size: 12pt;
+                    margin-left: 10px;
+                }
+            }
+        }
+    }
+}
+
+#myIonNav{
+            // transform: translateX(-60%) !important;
+            border: 2px solid green;
+            .menu-content-open{
+                transform: translateX(-60%) !important;
+
+            }
+}
