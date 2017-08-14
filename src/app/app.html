@@ -11,13 +11,16 @@
       </div>
       <span class="textMenu">{{menuItem.title}}</span>
     </div>
-
+    
   </div>
+
 </ion-menu>
 
 
 <!-- Disable swipe-to-go-back because it's poor UX to combine STGB with side menus -->
-<ion-nav  id="myIonNav" [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>    
+<ion-nav  id="myIonNav" [root]="rootPage" #content><!-- swipeBackEnabled="false">-->
+    
+</ion-nav>    
 
 <!-- 
 <ion-menu [content]="content" persistent="true" side="right">

@@ -12,6 +12,7 @@ import { HomePage } from '../pages/home/home';
 import { SetData } from '../pages/set-data/set-data';
 import { SetDataAssigned } from '../pages/set-data-assigned/set-data-assigned';
 import { ToggleTypeSetData } from '../pages/toggle-type-set-data/toggle-type-set-data';
+import { NavbarComponent } from '../components/navbar/navbar';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { ToggleTypeSetData } from '../pages/toggle-type-set-data/toggle-type-set
     HomePage,
     SetData,
     SetDataAssigned,
-    ToggleTypeSetData
+    ToggleTypeSetData,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,

@@ -59,8 +59,12 @@ $colors: (
 // App Windows Variables
 // --------------------------------------------------
 // Windows only Sass variables can go here
-
-
+// Ionic variables
+$font-family-base: 'Signika';
+$navbar-ios-height: 66px;
+$toolbar-ios-height: 66px;
+$text-input-highlight-color-valid: color($colors,primary);
+$menu-width: 200px;
 
 
 // App Theme
