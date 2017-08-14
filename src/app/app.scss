@@ -15,60 +15,48 @@
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
 
-.menu-content-open{
-    
-    // transform: translateX(-$menu_width) !important;
-    border: 2px solid blue;
-}
 ion-menu{
 
     .menu-inner{
-        // width: 100px !important;
         display: flex;
         flex-direction: column;
-        border: 2px solid green;
+        
+        #headerMenu{
+            height: 66px;
+            width: 100%;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
 
+        .item{
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 90%;     // Provides the margin
+            margin: 15px auto;   // Center the box
+
+            .iconWrapper{
+                flex-basis: 25%;
+
+                img{
+                    width: 20px;
+                    height: 20px;
+                }
+            }
+
+            span{
+                flex-basis: 80%;
+                text-align: left;
+                font-size: 12pt;
+            }
+
+            &:active{
+                background-color: #BDC8F4;
+            }
+        }
     }
-
 }
-
-
-// ion-menu{
-    
-// border: 2px solid red;
-    // width: 60% !important;
-    // position: absolute !important;
-    // left: 40%;
-    // .menu-inner{
-    //         width: 100% !important;
-    //         border: 2px solid purple;
-    //     #contentMenu{
-    //         display: flex;
-    //         flex-direction: column;
-    //         .item{
-    //             border: 1px solid blue;
-    //             display: flex;
-    //             padding: 10px;
-
-    //             .iconWrapper{
-    //                 border: 1px solid green;
-    //                 width: 20px;
-    //                 height: 20px;
-    //             }
-    //             .textMenu{
-    //                 font-size: 12pt;
-    //                 margin-left: 10px;
-    //             }
-    //         }
-    //     }
-    // }
-// }
-
-// #myIonNav{
-//             // transform: translateX(-60%) !important;
-//             border: 2px solid green;
-//             .menu-content-open{
-//                 transform: translateX(-60%) !important;
-
-//             }
-// }

@@ -4,10 +4,10 @@
   </div>
 
   <div id="contentMenu">
-    <div class="item" menuClose *ngFor="let menuItem of menuItems" (click)="onClickMenuItem(menuItem)">
+    <div text-center id="headerMenu">Home Task</div>
+    <div tappable class="item" menuClose *ngFor="let menuItem of menuItems" (click)="onClickMenuItem(menuItem)">
       <div class="iconWrapper">
-        <!-- <i class="{{menuItem.icon}}" aria-hidden="true"></i> -->
-        <i class="fa fa-trash-o" aria-hidden="true"></i>
+          <img src="assets/images/next.png">
       </div>
       <span class="textMenu">{{menuItem.title}}</span>
     </div>

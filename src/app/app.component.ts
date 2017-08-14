@@ -54,6 +54,7 @@ export class MyApp {
 	}
 	newDistribution(){
 		console.log("onClickNewDistribution()");
+
 	}
 
 	changeDistribution(){
