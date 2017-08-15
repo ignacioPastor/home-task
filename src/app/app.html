@@ -11,6 +11,10 @@
       </div>
       <span class="textMenu">{{menuItem.title}}</span>
     </div>
+    <ion-item (click)="testFunction()">
+      <ion-label>Start Sunday</ion-label>
+      <ion-toggle  [(ngModel)]="sunday" (ionChange)="updateSunday()"></ion-toggle>
+    </ion-item>
     
   </div>
 

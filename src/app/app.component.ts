@@ -19,7 +19,8 @@ export class MyApp {
     @ViewChild(Nav) nav: Nav;
 
  	rootPage: any;
-    menuItems: Array<{ title, icon}>;
+	menuItems: Array<{ title, icon, pos}>;
+	sunday: boolean;
 
 	taskDistribution: TaskDistribution;
 
@@ -43,22 +44,35 @@ export class MyApp {
 		});
 
 		this.menuItems = [
-			{title: "Change Distribution", icon: "fa fa-pencil-square-o"},
-			{title: "New Distribution", icon: "fa fa-trash-o"}
+			{title: "New Distribution", icon: "fa fa-trash-o", pos: 1}
 		]
 	}
 	onClickMenuItem(item: any){
 		console.log("onClickMenuItem()");
-		if(item.title == "Change Distribution") this.changeDistribution();
-		if(item.title == "New Distribution") this.newDistribution();
+		if(item.pos == 1) this.newDistribution();
 	}
-	newDistribution(){
+	async newDistribution(){
 		console.log("onClickNewDistribution()");
+		for(let i=0; i<10; i++)
+		await this.storage.remove('taskDistribution');
+		this.nav.setRoot(ToggleTypeSetData);
+	}
+
+	async testFunction(){
+		console.log("testFunction()");
+		let dataStored = await this.storage.get("taskDistribution");
+		console.log("storage");
+		console.log(dataStored);
+	}
+
+	async updateSunday(){
+		console.log("updateSunday()");
+		this.taskDistribution.sunday = this.sunday;
+		await this.storage.remove('taskDistribution');
+		this.storage.set('taskDistribution', this.taskDistribution);
 
 	}
 
-	changeDistribution(){
-		console.log("onClickChangeDistribution()");
-	}
+
 }
 

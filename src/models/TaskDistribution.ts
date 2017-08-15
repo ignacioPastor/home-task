@@ -3,18 +3,21 @@ export class TaskDistribution{
     houseMates: string[];
     tasks: string[];
     adjustedHouseMates: string[];
+    sunday: boolean;
 
     constructor(json: any){
         if(json == null){
             this.houseMates = [];
             this.tasks = [];
             this.adjustedHouseMates = [];
+            this.sunday = false;
         }else{
             if(typeof json == "string"){
                 json = JSON.parse(json);
             }
             this.houseMates = json.houseMates;
             this.tasks = json.tasks;
+            this.sunday = json.sunday;
             this.setAdjustedHouseMates();
         }
     }

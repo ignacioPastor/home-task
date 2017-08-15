@@ -18,10 +18,12 @@ export class ToggleTypeSetData {
 	}
 
 	clickRandomAssignation(){
+		console.log("clickRandomAssignation");
 		this.navCtrl.push(SetData);
 	}
 
 	clickAssignedDistribution(){
+		console.log("clickAssignedDistribution");
 		this.navCtrl.push(SetDataAssigned);
 	}
 }
