@@ -7,6 +7,8 @@ import { Storage } from '@ionic/storage';
 
 import { TaskDistribution } from "./../models/TaskDistribution";
 
+import { NotificationProvider } from './../providers/notification/notification';
+
 import { HomePage } from '../pages/home/home';
 import { SetData } from '../pages/set-data/set-data';
 import { SetDataAssigned } from '../pages/set-data-assigned/set-data-assigned';
@@ -27,7 +29,7 @@ export class MyApp {
 	taskDistribution: TaskDistribution;
 
 	constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private storage: Storage,
-			private alertCtrl: AlertController, public events: Events) {
+			private alertCtrl: AlertController, public events: Events, private notificationProvider: NotificationProvider) {
 		platform.ready().then(() => {
 			statusBar.styleDefault();
 
@@ -69,8 +71,15 @@ export class MyApp {
 		console.log(dataStored);
 	}
 
+	disallowNext: boolean = false;
 	async updateSunday(){
 		console.log("updateSunday()---------1");
+
+		// to avoid logic of this function, useful on change this.sunday value by code, which throws the onChange event too
+		if(this.disallowNext){
+			this.disallowNext = false;
+			return;
+		}
 
 		// Only allow one toggle each second to avoid multitapping, which throws multiple events
 		//     and finally gives an error due to remove and set storage asynchronously
@@ -82,6 +91,13 @@ export class MyApp {
 		// If in this season we have just created the task distribution we have not stored yet any taskDistribution
 		if(!this.taskDistribution) this.taskDistribution = await this.storage.get("taskDistribution");
 
+		// Still any taskDistribution has been asigned
+		if(!this.taskDistribution){
+			this.notificationProvider.showMessage("Please, fill before some task distribution.", "Info:");
+			this.disallowNext = true;
+			this.sunday = false;
+			return;
+		}
 		this.taskDistribution.sunday = this.sunday;
 
 		// stored taskDistribution has the week 1 of year distribution, and this.task... has

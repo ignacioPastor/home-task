@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, Platform, Events } from 'ionic-angular';
+import { Storage } from '@ionic/storage';
 
 import { TaskDistribution } from "./../../models/TaskDistribution";
 
@@ -8,7 +9,6 @@ import { TaskDistribution } from "./../../models/TaskDistribution";
     templateUrl: 'home.html'
 })
 export class HomePage {
-    nTest = 15;
 
     taskDistribution: TaskDistribution;  // map where stored the two array with data
     today: Date;
@@ -18,11 +18,11 @@ export class HomePage {
     variationWeek: number = 0;  // manage if we are showing the next or following weeks (+1 and so on), or previous week (-1 and so on)
 
     constructor(private platform: Platform, public navCtrl: NavController, public navParams: NavParams, 
-            public events: Events) {
+            public events: Events, private storage: Storage) {
         this.taskDistribution = new TaskDistribution(this.navParams.get("taskDistribution"));
         
         this.events.subscribe('taskDistributionChanged', () => {
-            this.displayData();
+            this.chargeDistribution();
           });
 
         // if this is the main window, goBack means close the app
@@ -35,7 +35,11 @@ export class HomePage {
             }
         });
         
-        
+    }
+
+    async chargeDistribution(){
+        this.taskDistribution = new TaskDistribution(await this.storage.get("taskDistribution"));
+        this.displayData();
     }
 
     // lifeCicle, enters on view load
@@ -44,7 +48,7 @@ export class HomePage {
     }
 
     displayData(){
-        this.today = new Date(2017, 7, this.nTest);
+        this.today = new Date();
         this.numberThisWeek = this.getWeek();   // get the number of current week
         this.rotateTask(this.numberThisWeek - 1 + this.variationWeek);   // Asign the rotation to this week considering the asignation of week number 1
         this.showPeriodWeek();
@@ -90,7 +94,7 @@ export class HomePage {
 
     // Return the number of the current week
     getWeek() {
-        var date = new Date(2017, 7, this.nTest);
+        var date = new Date();
         date.setHours(0, 0, 0, 0);
         // Thursday in current week decides the year.
         date.setDate(date.getDate() + 3 - (date.getDay() + 6) % 7);
@@ -103,11 +107,11 @@ export class HomePage {
         // To if the week starts on sunday, the 
         // nWeek = this.taskDistribution.sunday ? nWeek + 1 : nWeek;
         if(this.taskDistribution.sunday){
-            let newToday = new Date(2017, 7, this.nTest);
+            let newToday = new Date();
             let dayNumber = newToday.getDay();
             console.log("dayNumber");
             console.log(dayNumber);
-            nWeek = dayNumber == 0 ? nWeek - 1 : nWeek;
+            nWeek = dayNumber == 0 ? nWeek + 1 : nWeek;
 
         }
         return nWeek;
@@ -142,6 +146,12 @@ export class HomePage {
         return this.dateWeekEnd;
     }
 
+    testHome(){
+        console.log("");
+        console.log("testHome");
+        console.log("this.taskDistribution");
+        console.log(this.taskDistribution);
+    }
     
 
 }
