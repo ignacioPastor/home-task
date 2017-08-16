@@ -13,7 +13,7 @@
     </div>
     <ion-item (click)="testFunction()">
       <ion-label>Start Sunday</ion-label>
-      <ion-toggle  [(ngModel)]="sunday" (ionChange)="updateSunday()"></ion-toggle>
+      <ion-toggle  [(ngModel)]="sunday" (ionChange)="updateSunday()" disabled="{{toggleDisabled}}"></ion-toggle>
     </ion-item>
     
   </div>

@@ -2,7 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { AlertController } from 'ionic-angular';
+import { AlertController, Events } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 
 import { TaskDistribution } from "./../models/TaskDistribution";
@@ -21,19 +21,23 @@ export class MyApp {
  	rootPage: any;
 	menuItems: Array<{ title, icon, pos}>;
 	sunday: boolean;
+	toggleDisabled: boolean = false;
+
 
 	taskDistribution: TaskDistribution;
 
 	constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private storage: Storage,
-			private alertCtrl: AlertController) {
+			private alertCtrl: AlertController, public events: Events) {
 		platform.ready().then(() => {
 			statusBar.styleDefault();
 
 			this.storage.ready().then(() => {
 				this.storage.get('taskDistribution').then(data => {
+					
 					splashScreen.hide();
 					if(data){
 						this.taskDistribution = data;	// in the future charge data from stored data (think how parse from string)
+						this.sunday = this.taskDistribution.sunday;
 						this.nav.setRoot(HomePage, {taskDistribution: this.taskDistribution});
 					}else{
 						this.nav.setRoot(ToggleTypeSetData);
@@ -66,11 +70,27 @@ export class MyApp {
 	}
 
 	async updateSunday(){
-		console.log("updateSunday()");
-		this.taskDistribution.sunday = this.sunday;
-		await this.storage.remove('taskDistribution');
-		this.storage.set('taskDistribution', this.taskDistribution);
+		console.log("updateSunday()---------1");
 
+		// Only allow one toggle each second to avoid multitapping, which throws multiple events
+		//     and finally gives an error due to remove and set storage asynchronously
+		this.toggleDisabled = true;
+		setTimeout(() => {
+			this.toggleDisabled = false;
+		}, 1000);
+
+		// If in this season we have just created the task distribution we have not stored yet any taskDistribution
+		if(!this.taskDistribution) this.taskDistribution = await this.storage.get("taskDistribution");
+
+		this.taskDistribution.sunday = this.sunday;
+
+		// stored taskDistribution has the week 1 of year distribution, and this.task... has
+		//     the current distribution maybe, so we only should update the sunday attribute on toggleSunday
+		let newTask = await this.storage.get("taskDistribution");
+		for(let i=0; i<10; i++) await this.storage.remove('taskDistribution');
+		newTask.sunday = this.sunday;
+		await this.storage.set('taskDistribution', this.taskDistribution);
+			this.events.publish('taskDistributionChanged');
 	}
 
 

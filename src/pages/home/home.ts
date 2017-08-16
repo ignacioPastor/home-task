@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, Platform } from 'ionic-angular';
+import { NavController, NavParams, Platform, Events } from 'ionic-angular';
 
 import { TaskDistribution } from "./../../models/TaskDistribution";
 
@@ -8,6 +8,7 @@ import { TaskDistribution } from "./../../models/TaskDistribution";
     templateUrl: 'home.html'
 })
 export class HomePage {
+    nTest = 15;
 
     taskDistribution: TaskDistribution;  // map where stored the two array with data
     today: Date;
@@ -16,8 +17,13 @@ export class HomePage {
     dateWeekEnd;    // date of Sunday current week
     variationWeek: number = 0;  // manage if we are showing the next or following weeks (+1 and so on), or previous week (-1 and so on)
 
-    constructor(private platform: Platform, public navCtrl: NavController, public navParams: NavParams) {
+    constructor(private platform: Platform, public navCtrl: NavController, public navParams: NavParams, 
+            public events: Events) {
         this.taskDistribution = new TaskDistribution(this.navParams.get("taskDistribution"));
+        
+        this.events.subscribe('taskDistributionChanged', () => {
+            this.displayData();
+          });
 
         // if this is the main window, goBack means close the app
         this.platform.registerBackButtonAction(() => {
@@ -29,11 +35,16 @@ export class HomePage {
             }
         });
         
+        
     }
 
     // lifeCicle, enters on view load
     ionViewDidLoad() {
-        this.today = new Date();
+        this.displayData();
+    }
+
+    displayData(){
+        this.today = new Date(2017, 7, this.nTest);
         this.numberThisWeek = this.getWeek();   // get the number of current week
         this.rotateTask(this.numberThisWeek - 1 + this.variationWeek);   // Asign the rotation to this week considering the asignation of week number 1
         this.showPeriodWeek();
@@ -79,21 +90,40 @@ export class HomePage {
 
     // Return the number of the current week
     getWeek() {
-        var date = new Date();
+        var date = new Date(2017, 7, this.nTest);
         date.setHours(0, 0, 0, 0);
         // Thursday in current week decides the year.
         date.setDate(date.getDate() + 3 - (date.getDay() + 6) % 7);
         // January 4 is always in week 1.
         var week1 = new Date(date.getFullYear(), 0, 4);
         // Adjust to Thursday in week 1 and count number of weeks from date to week1.
-        return 1 + Math.round(((date.getTime() - week1.getTime()) / 86400000
+        let nWeek = 1 + Math.round(((date.getTime() - week1.getTime()) / 86400000
                             - 3 + (week1.getDay() + 6) % 7) / 7);
+        
+        // To if the week starts on sunday, the 
+        // nWeek = this.taskDistribution.sunday ? nWeek + 1 : nWeek;
+        if(this.taskDistribution.sunday){
+            let newToday = new Date(2017, 7, this.nTest);
+            let dayNumber = newToday.getDay();
+            console.log("dayNumber");
+            console.log(dayNumber);
+            nWeek = dayNumber == 0 ? nWeek - 1 : nWeek;
+
+        }
+        return nWeek;
     }
 
     // get the date of monday of given week "w" of given year "y"
     getDateOfWeek(w, y) {
         var d = (1 + (w - 1) * 7); // 1st of January + 7 days for each week
-        d++; // error detected in the function, day must be increased in one
+       // d++; // error detected in the function, day must be increased in one
+
+        // If the week starts on monday day must be increased by one
+        d = this.taskDistribution.sunday ? d : d + 1;
+        console.log("getDateOfWeek");
+        console.log("this.taskDistribution.sunday");
+        console.log(this.taskDistribution.sunday);
+
         return new Date(y, 0, d);
     }
 
@@ -102,7 +132,15 @@ export class HomePage {
 		let myTasks: string[] = ["task_1", "task_2", "task_3", "task_4", "task_5", "task_6"];
 		let myHouseMates: string[] = ["homemate_1", "homemate_2", "homemate_3"];
 		this.taskDistribution = new TaskDistribution({tasks: myTasks, houseMates: myHouseMates});
-	}
+    }
+    
+    getDateWeekInit(){
+        return this.dateWeekInit;
+    }
+
+    getDateWeekEnd(){
+        return this.dateWeekEnd;
+    }
 
     
 

@@ -6,6 +6,7 @@
 	<p>New Version</p>
 	<p>Today: {{today | date:'dd/MM/yyyy'}}</p>
 	<p>{{dateWeekInit | date:'dd/MM/yyyy'}} - {{dateWeekEnd | date:'dd/MM/yyyy'}}</p>
+	
 	<ion-list>
 		<ion-item *ngFor="let task of taskDistribution.tasks; let i = index">
 			<div class="taskClass">{{taskDistribution.tasks[i]}}:</div>
