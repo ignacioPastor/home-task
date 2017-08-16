@@ -106,7 +106,8 @@ export class MyApp {
 		for(let i=0; i<10; i++) await this.storage.remove('taskDistribution');
 		newTask.sunday = this.sunday;
 		await this.storage.set('taskDistribution', this.taskDistribution);
-			this.events.publish('taskDistributionChanged');
+		
+		this.events.publish('taskDistributionChanged');
 	}
 
 

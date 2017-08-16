@@ -130,39 +130,3 @@ export class SetDataAssigned {
 	}
 
 }
-
-
-// // dev mode
-//     private storeData(){
-// 		// let myTasks: string[] = ["task_1"];
-// 		// let myHouseMates: string[] = ["homemate_1"];
-		
-// 		// let myTasks: string[] = ["task_1", "task_2"];
-// 		// let myHouseMates: string[] = ["homemate_1", "homemate_2"];
-
-// 		// let myTasks: string[] = ["task_1", "task_2", "task_3"];
-// 		// let myHouseMates: string[] = ["homemate_1", "homemate_2", "homemate_3"];
-
-// 		// let myTasks: string[] = ["task_1", "task_2", "task_3", "task_4"];
-// 		// let myHouseMates: string[] = ["homemate_1", "homemate_2", "homemate_3", "homemate_4"];
-
-// 		// let myTasks: string[] = ["task_1", "task_2", "task_3", "task_4", "task_5"];
-// 		// let myHouseMates: string[] = ["homemate_1", "homemate_2", "homemate_3", "homemate_4", "homemate_5"];
-
-// 		// let myTasks: string[] = ["task_1", "task_2", "task_3", "task_4", "task_5", "task_6"];
-// 		// let myHouseMates: string[] = ["homemate_1", "homemate_2", "homemate_3", "homemate_4", "homemate_5", "homemate_6"];
-
-// 		// let myTasks: string[] = ["task_1", "task_2", "task_3", "task_4", "task_5", "task_6", "task_7"];
-// 		// let myHouseMates: string[] = ["homemate_1", "homemate_2", "homemate_3", "homemate_4", "homemate_5", "homemate_6", "homemate_7"];
-
-// 		// let myTasks: string[] = ["task_1", "task_2", "task_3", "task_4", "task_5", "task_6", "task_7", "task_8"];
-// 		// let myHouseMates: string[] = ["homemate_1", "homemate_2", "homemate_3", "homemate_4", "homemate_5", "homemate_6", "homemate_7", "homemate_8"];
-
-// 		// let myTasks: string[] = ["task_1", "task_2", "task_3", "task_4", "task_5", "task_6", "task_7", "task_8", "task_9"];
-// 		// let myHouseMates: string[] = ["homemate_1", "homemate_2", "homemate_3", "homemate_4", "homemate_5", "homemate_6", "homemate_7", "homemate_8", "homemate_9"];
-
-// 		let myTasks: string[] = ["task_1", "task_2", "task_3", "task_4", "task_5", "task_6", "task_7", "task_8", "task_9", "task_10"];
-// 		let myHouseMates: string[] = ["homemate_1", "homemate_2", "homemate_3", "homemate_4", "homemate_5", "homemate_6", "homemate_7", "homemate_8", "homemate_9", "homemate_10"];
-
-// 		this.taskDistribution = new TaskDistribution({tasks: myTasks, houseMates: myHouseMates});
-// 	}

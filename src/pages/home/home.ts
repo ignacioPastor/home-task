@@ -109,8 +109,6 @@ export class HomePage {
         if(this.taskDistribution.sunday){
             let newToday = new Date();
             let dayNumber = newToday.getDay();
-            console.log("dayNumber");
-            console.log(dayNumber);
             nWeek = dayNumber == 0 ? nWeek + 1 : nWeek;
 
         }
@@ -124,9 +122,6 @@ export class HomePage {
 
         // If the week starts on monday day must be increased by one
         d = this.taskDistribution.sunday ? d : d + 1;
-        console.log("getDateOfWeek");
-        console.log("this.taskDistribution.sunday");
-        console.log(this.taskDistribution.sunday);
 
         return new Date(y, 0, d);
     }
