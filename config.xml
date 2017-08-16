@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="ignaciopastor.hometask" version="0.2.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="ignaciopastor.hometask" version="0.2.2" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>HomeTask</name>
     <description>App to distribute the home tasks between housemates</description>
-    <author email="ignacio.past@gmail.com" href="http://ionicframework.com/">Ignacio Pastor</author>
+    <author email="ignacio.past@gmail.com" href="#">Ignacio Pastor</author>
     <content original-src="index.html" src="http://192.168.0.206:8100" />
     <access origin="*" />
     <allow-navigation href="http://ionic.local/*" />
