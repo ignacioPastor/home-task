@@ -10,6 +10,7 @@ import { TaskDistribution } from "./../models/TaskDistribution";
 import { NotificationProvider } from './../providers/notification/notification';
 
 import { HomePage } from '../pages/home/home';
+import { LoginPage } from '../pages/login/login';
 import { SetData } from '../pages/set-data/set-data';
 import { SetDataAssigned } from '../pages/set-data-assigned/set-data-assigned';
 import { ToggleTypeSetData } from '../pages/toggle-type-set-data/toggle-type-set-data';
@@ -28,35 +29,52 @@ export class MyApp {
 
 	taskDistribution: TaskDistribution;
 
-	constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private storage: Storage,
+	constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, private storage: Storage,
 			private alertCtrl: AlertController, public events: Events, private notificationProvider: NotificationProvider) {
-		platform.ready().then(() => {
-			statusBar.styleDefault();
-
-			this.storage.ready().then(() => {
-				this.storage.get('taskDistribution').then(data => {
-					
-					splashScreen.hide();
-					if(data){
-						this.taskDistribution = data;	// in the future charge data from stored data (think how parse from string)
-						this.sunday = this.taskDistribution.sunday;
-						this.nav.setRoot(HomePage, {taskDistribution: this.taskDistribution});
-					}else{
-						this.nav.setRoot(ToggleTypeSetData);
-					}
-					
-				})
-			})
-		});
+		
+		// this.splashScreen.show(); not sure if it's necessary
+		
+		this.initApp();
 
 		this.menuItems = [
-			{title: "New Distribution", icon: "fa fa-trash-o", pos: 1}
+			{title: "New Distribution", icon: "fa fa-trash-o", pos: 1},
+			{title: "Sign Out", icon: "fa fa-trash-o", pos: 2}
 		]
 	}
+
+
+
+	async initApp(){
+		await this.platform.ready();
+		this.statusBar.styleDefault();
+		await this.storage.ready();
+		let user = await this.storage.get('user');
+		setTimeout(() => this.splashScreen.hide(), 250);
+		if (user) {
+            this.nav.setRoot(HomePage);
+        }
+        else {
+            this.nav.push(LoginPage, { animate: false, splash: this.splashScreen });
+        }
+	}
+
+
+
+
+
+
 	onClickMenuItem(item: any){
 		console.log("onClickMenuItem()");
 		if(item.pos == 1) this.newDistribution();
+		if(item.pos == 2) this.signOut();
 	}
+
+	async signOut() {
+        await this.storage.remove('user');
+        await this.storage.remove('user');
+        await this.storage.remove('user');
+    }
+
 	async newDistribution(){
 		console.log("onClickNewDistribution()");
 		for(let i=0; i<10; i++)
@@ -108,6 +126,17 @@ export class MyApp {
 		await this.storage.set('taskDistribution', this.taskDistribution);
 		
 		this.events.publish('taskDistributionChanged');
+	}
+
+	async manageStoredDistribution(){
+		let data = await this.storage.get('taskDistribution');
+		if(data){
+			this.taskDistribution = data;	// in the future charge data from stored data (think how parse from string)
+			this.sunday = this.taskDistribution.sunday;
+			this.nav.setRoot(HomePage, {taskDistribution: this.taskDistribution});
+		}else{
+			this.nav.setRoot(ToggleTypeSetData);
+		}
 	}
 
 

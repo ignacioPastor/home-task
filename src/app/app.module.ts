@@ -10,6 +10,7 @@ import { HttpModule } from '@angular/http';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
+import { LoginPage } from '../pages/login/login';
 import { SetData } from '../pages/set-data/set-data';
 import { SetDataAssigned } from '../pages/set-data-assigned/set-data-assigned';
 import { ToggleTypeSetData } from '../pages/toggle-type-set-data/toggle-type-set-data';
@@ -23,7 +24,8 @@ import { NotificationProvider } from '../providers/notification/notification';
     SetData,
     SetDataAssigned,
     ToggleTypeSetData,
-    NavbarComponent
+    NavbarComponent,
+    LoginPage
   ],
   imports: [
     BrowserModule,
@@ -37,7 +39,8 @@ import { NotificationProvider } from '../providers/notification/notification';
     HomePage,
     SetData,
     SetDataAssigned,
-    ToggleTypeSetData
+    ToggleTypeSetData,
+    LoginPage
   ],
   providers: [
     StatusBar,

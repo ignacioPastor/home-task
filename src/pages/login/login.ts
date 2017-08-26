@@ -9,16 +9,31 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
  */
 @IonicPage()
 @Component({
-  selector: 'page-login',
-  templateUrl: 'login.html',
+	selector: 'page-login',
+	templateUrl: 'login.html',
 })
 export class LoginPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-  }
+	email: string;
+	password: string;
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad LoginPage');
-  }
+	constructor(public navCtrl: NavController, public navParams: NavParams) {
+	}
+
+	ionViewDidLoad() {
+		console.log('ionViewDidLoad LoginPage');
+	}
+
+	forgotPassword(){
+		console.log("forgotPassword()");
+	}
+
+	signUp(){
+		console.log("signUp()");
+	}
+
+	signIn(){
+		console.log("signIn()");
+	}
 
 }
