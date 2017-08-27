@@ -22,28 +22,28 @@ export class LoginPage {
 	}
 
 	ionViewDidLoad() {
-		
+
 	}
 
-	forgotPassword(){
+	forgotPassword() {
 		console.log("forgotPassword()");
 	}
 
-	signUp(){
+	signUp() {
 		this.navCtrl.push(SignupPage);
 	}
 
-	async signIn(){
-		
+	async signIn() {
+
 		try {
 			let result = await this.auth.signIn(this.email, this.password);
-			if(result && result.ok){
+			if (result && result.ok) {
 				this.storage.set('user', result.user);
 				this.navCtrl.push(ToggleTypeSetData);
-			}else{
+			} else {
 				this.notificator.showError("Password or email incorrect!");
 			}
-		} catch (err){
+		} catch (err) {
 			console.error(err);
 			this.notificator.showUnexpectedError();
 		}

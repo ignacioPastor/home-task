@@ -15,7 +15,10 @@ import { SignupPage } from '../pages/signup/signup';
 import { SetData } from '../pages/set-data/set-data';
 import { SetDataAssigned } from '../pages/set-data-assigned/set-data-assigned';
 import { ToggleTypeSetData } from '../pages/toggle-type-set-data/toggle-type-set-data';
+import { EditUserPage } from '../pages/edit-user/edit-user';
+
 import { NavbarComponent } from '../components/navbar/navbar';
+
 import { NotificationProvider } from '../providers/notification/notification';
 import { AuthProvider } from '../providers/auth/auth';
 import { UserProvider } from '../providers/user/user';
@@ -27,6 +30,7 @@ import { UserProvider } from '../providers/user/user';
     SetData,
     SetDataAssigned,
     ToggleTypeSetData,
+    EditUserPage,
     NavbarComponent,
     LoginPage,
     SignupPage
@@ -43,6 +47,7 @@ import { UserProvider } from '../providers/user/user';
     HomePage,
     SetData,
     SetDataAssigned,
+    EditUserPage,
     ToggleTypeSetData,
     LoginPage,
     SignupPage
