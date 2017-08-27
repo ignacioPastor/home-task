@@ -1,0 +1,43 @@
+
+<ion-header>
+	<navbar></navbar>
+</ion-header>
+
+
+<ion-content padding>
+
+	<form>
+		<div id="content">
+			<img src="http://via.placeholder.com/350x250" alt="">
+			<div id="inputs">
+
+				<ion-item>
+					<ion-label floating>User Name</ion-label>
+					<ion-input type="text" [(ngModel)]="user.userName" clearInput name="userName"></ion-input>
+				</ion-item>
+
+				<ion-item>
+					<ion-label floating>Email</ion-label>
+					<ion-input type="email" [(ngModel)]="user.email" clearInput name="email"></ion-input>
+				</ion-item>
+
+				<ion-item>
+					<ion-label floating>Password</ion-label>
+					<ion-input type="password" [(ngModel)]="user.password" clearInput name="password"></ion-input>
+				</ion-item>
+
+				<ion-item>
+					<ion-label floating>Repeat Password</ion-label>
+					<ion-input type="password" [(ngModel)]="passwordControl" clearInput name="passwordControl"></ion-input>
+				</ion-item>
+
+			</div>
+
+			<div id="buttons">
+				<button tappable type="submit" ion-button full  (click)="signUp()">Sign Up</button>
+				<!-- <button tappable ion-button full color='secondary'  (click)="removeAccount()">Remove Account</button> -->
+			</div>
+		</div>
+	</form>
+
+</ion-content>

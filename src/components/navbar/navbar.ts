@@ -10,7 +10,6 @@ export class NavbarComponent {
   text: string;
 
   constructor() {
-    console.log('Hello NavbarComponent Component');
     this.text = 'Hello World';
   }
 

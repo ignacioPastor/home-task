@@ -11,12 +11,14 @@ import { HttpModule } from '@angular/http';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
+import { SignupPage } from '../pages/signup/signup';
 import { SetData } from '../pages/set-data/set-data';
 import { SetDataAssigned } from '../pages/set-data-assigned/set-data-assigned';
 import { ToggleTypeSetData } from '../pages/toggle-type-set-data/toggle-type-set-data';
 import { NavbarComponent } from '../components/navbar/navbar';
 import { NotificationProvider } from '../providers/notification/notification';
 import { AuthProvider } from '../providers/auth/auth';
+import { UserProvider } from '../providers/user/user';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,8 @@ import { AuthProvider } from '../providers/auth/auth';
     SetDataAssigned,
     ToggleTypeSetData,
     NavbarComponent,
-    LoginPage
+    LoginPage,
+    SignupPage
   ],
   imports: [
     BrowserModule,
@@ -41,7 +44,8 @@ import { AuthProvider } from '../providers/auth/auth';
     SetData,
     SetDataAssigned,
     ToggleTypeSetData,
-    LoginPage
+    LoginPage,
+    SignupPage
   ],
   providers: [
     StatusBar,
@@ -49,7 +53,8 @@ import { AuthProvider } from '../providers/auth/auth';
     Keyboard,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     NotificationProvider,
-    AuthProvider
+    AuthProvider,
+    UserProvider
   ]
 })
 export class AppModule {}

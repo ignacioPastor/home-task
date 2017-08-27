@@ -72,7 +72,8 @@ export class MyApp {
 	async signOut() {
         await this.storage.remove('user');
         await this.storage.remove('user');
-        await this.storage.remove('user');
+		await this.storage.remove('user');
+		this.nav.setRoot(LoginPage);
     }
 
 	async newDistribution(){
