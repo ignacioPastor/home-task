@@ -16,6 +16,7 @@ import { SetDataAssigned } from '../pages/set-data-assigned/set-data-assigned';
 import { ToggleTypeSetData } from '../pages/toggle-type-set-data/toggle-type-set-data';
 import { NavbarComponent } from '../components/navbar/navbar';
 import { NotificationProvider } from '../providers/notification/notification';
+import { AuthProvider } from '../providers/auth/auth';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { NotificationProvider } from '../providers/notification/notification';
     SplashScreen,
     Keyboard,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    NotificationProvider
+    NotificationProvider,
+    AuthProvider
   ]
 })
 export class AppModule {}
