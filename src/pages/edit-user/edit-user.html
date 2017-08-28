@@ -6,13 +6,37 @@
 -->
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>edit-user</ion-title>
-  </ion-navbar>
+	<ion-navbar>
+		<ion-title>edit-user</ion-title>
+	</ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
+	<div id="wrapper">
+		<div>Edit {{mode}}</div>
+		<img src="http://via.placeholder.com/350x250" alt="">
+		<form>
+			<div id="content">
+				<div>{{infoText}}</div>
+				<div id="inputs">
+					<ion-item>
+						<ion-label floating>{{placeholder_1}}</ion-label>
+						<ion-input type="{{mode.includes('password') ? 'password' : 'text'}}" [(ngModel)]="field_1" clearInput name="field_1"></ion-input>
+					</ion-item>
 
+					<ion-item *ngIf="showField_2">
+						<ion-label floating>{{placeholder_2}}</ion-label>
+						<ion-input type="{{mode.includes('password') ? 'password' : 'text'}}" [(ngModel)]="field_2" clearInput name="field_2"></ion-input>
+					</ion-item>
+
+				</div>
+
+				<div id="buttons">
+					<button tappable type="submit" ion-button full (click)="clickButton()">Send</button>
+				</div>
+			</div>
+		</form>
+	</div>
 </ion-content>

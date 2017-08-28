@@ -6,6 +6,9 @@ import { Storage } from '@ionic/storage';
 import { HomePage } from '../home/home';
 import { ToggleTypeSetData } from '../toggle-type-set-data/toggle-type-set-data';
 import { SignupPage } from '../signup/signup';
+import { EditUserPage } from '../edit-user/edit-user';
+import { Constants } from './../../constants';
+
 
 
 @IonicPage()
@@ -26,7 +29,7 @@ export class LoginPage {
 	}
 
 	forgotPassword() {
-		console.log("forgotPassword()");
+		this.navCtrl.push(EditUserPage, {mode: Constants.MODE_EDIT.FORGOT_PASSWORD});
 	}
 
 	signUp() {
