@@ -6,6 +6,7 @@ import { UserProvider } from './../../providers/user/user';
 import { IResult } from './../../interfaces/IResult'
 import { ToggleTypeSetData } from '../toggle-type-set-data/toggle-type-set-data';
 import { Storage } from '@ionic/storage';
+import { Utils } from './../../utils';
 
 
 @IonicPage()
@@ -54,42 +55,19 @@ export class SignupPage {
 			return false;
 		}
 
-		if (!this.validateEmail(this.user.email)) {
+		if (!Utils.validateEmail(this.user.email)) {
 			this.notificator.showMessage("Please, insert a valid email.", "Invalid email");
 			return false;
 		}
 		
-		if (!this.validatePassword(this.user.password, this.passwordControl)){
-			return false;
+		let result: IResult = Utils.validatePassword(this.user.password, this.passwordControl);
+		if (!result || !result.ok) {
+			this.notificator.showMessage(result.error, "Incorrect password");
+			return;
 		}
 
 		return true;
 
-	}
-
-	validateEmail(email){
-		var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-		return re.test(email);
-	}
-
-	validatePassword(pass, pass2): boolean{
-
-		if(pass != pass2){
-			this.notificator.showMessage("Both fields must match", "Incorrect password");
-			return false;
-		}
-
-		if(pass == ''){
-			this.notificator.showMessage("Password can't be empty", "Incorrect password");
-			return false;
-		}
-
-		if(pass.length < 6){
-			this.notificator.showMessage("Password must have at least 6 characters", "Incorrect password");
-			return false;
-		}
-
-		return true;
 	}
 
 	async removeAccount(){
