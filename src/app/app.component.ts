@@ -4,6 +4,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { AlertController, Events } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
+import { Keyboard } from '@ionic-native/keyboard';
 
 import { TaskDistribution } from "./../models/TaskDistribution";
 
@@ -30,7 +31,7 @@ export class MyApp {
 	taskDistribution: TaskDistribution;
 
 	constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, private storage: Storage,
-			private alertCtrl: AlertController, public events: Events, private notificationProvider: NotificationProvider) {
+			private alertCtrl: AlertController, public events: Events, private notificationProvider: NotificationProvider, private keyboard: Keyboard) {
 		
 		// this.splashScreen.show(); not sure if it's necessary
 		
@@ -46,6 +47,7 @@ export class MyApp {
 
 	async initApp(){
 		await this.platform.ready();
+		this.keyboard.disableScroll(true);
 		this.statusBar.styleDefault();
 		await this.storage.ready();
 		let user = await this.storage.get('user');

@@ -24,15 +24,16 @@ export class LoginPage {
 	constructor(public navCtrl: NavController, public navParams: NavParams, public auth: AuthProvider, private storage: Storage, private notificator: NotificationProvider) {
 	}
 
-	ionViewDidLoad() {
-
-	}
 
 	forgotPassword() {
+		this.email = '';
+		this.password = '';
 		this.navCtrl.push(EditUserPage, {mode: Constants.MODE_EDIT.FORGOT_PASSWORD});
 	}
 
 	signUp() {
+		this.email = '';
+		this.password = '';
 		this.navCtrl.push(SignupPage);
 	}
 
