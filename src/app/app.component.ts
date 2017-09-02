@@ -15,6 +15,7 @@ import { LoginPage } from '../pages/login/login';
 import { SetData } from '../pages/set-data/set-data';
 import { SetDataAssigned } from '../pages/set-data-assigned/set-data-assigned';
 import { ToggleTypeSetData } from '../pages/toggle-type-set-data/toggle-type-set-data';
+import { SettingsPage } from '../pages/settings/settings';
 
 @Component({
 	templateUrl: 'app.html'
@@ -39,7 +40,8 @@ export class MyApp {
 
 		this.menuItems = [
 			{title: "New Distribution", icon: "fa fa-trash-o", pos: 1},
-			{title: "Sign Out", icon: "fa fa-trash-o", pos: 2}
+			{title: "Sign Out", icon: "fa fa-trash-o", pos: 2},
+			{title: "Settings", icon: "fa fa-trash-o", pos: 3}
 		]
 	}
 
@@ -69,6 +71,7 @@ export class MyApp {
 		console.log("onClickMenuItem()");
 		if(item.pos == 1) this.newDistribution();
 		if(item.pos == 2) this.signOut();
+		if(item.pos == 3) this.nav.push(SettingsPage);
 	}
 
 	async signOut() {

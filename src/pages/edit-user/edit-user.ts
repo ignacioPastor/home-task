@@ -4,8 +4,11 @@ import { Constants } from './../../constants';
 import { Utils } from './../../utils';
 import { IResult } from './../../interfaces/IResult';
 import { UserProvider } from './../../providers/user/user';
+import { AuthProvider } from './../../providers/auth/auth';
 import { NotificationProvider } from './../../providers/notification/notification';
+import { User } from './../../models/User';
 
+import { Storage } from '@ionic/storage';
 
 @IonicPage()
 @Component({
@@ -13,6 +16,8 @@ import { NotificationProvider } from './../../providers/notification/notificatio
 	templateUrl: 'edit-user.html',
 })
 export class EditUserPage {
+
+	user: User;
 
 	field_1: string;
 	field_2: string;
@@ -28,7 +33,7 @@ export class EditUserPage {
 
 
 	constructor(public navCtrl: NavController, public navParams: NavParams, private userProvider: UserProvider,
-		private notificator: NotificationProvider) {
+		private notificator: NotificationProvider, private auth: AuthProvider, private storage: Storage) {
 		this.mode = this.navParams.get('mode');
 	}
 
@@ -36,7 +41,8 @@ export class EditUserPage {
 		this.configureMode(this.mode);
 	}
 
-	configureMode(myMode: string) {
+
+	async configureMode(myMode: string) {
 		this.mode = myMode;
 		this.field_1 = '';
 		this.field_2 = '';
@@ -58,6 +64,13 @@ export class EditUserPage {
 			this.showField_2 = true;
 			this.typeField_1 = 'password';
 			this.typeField_2 = 'password';
+		} else if (myMode == Constants.MODE_EDIT.CHANGE_PASSWORD_CONFIRM_PASS) {
+			this.infoText = "Please enter your current password";
+			this.placeholder_1 = "Current password";
+			this.showField_2 = false;
+			this.typeField_1 = 'password';
+			this.user = new User(await this.storage.get('user'));
+			this.emailUser = this.user.email;
 		}
 	}
 
@@ -70,8 +83,31 @@ export class EditUserPage {
 
 		} else if (this.mode == Constants.MODE_EDIT.CHANGE_PASSWORD) {
 			this.changePassword();
-
+		} else if (this.mode == Constants.MODE_EDIT.CHANGE_PASSWORD_CONFIRM_PASS) {
+			this.checkCorrectPassword();
 		}
+	}
+
+	async checkCorrectPassword() {
+		if (!this.field_1 || !(this.field_1.length > 0)) {
+			this.notificator.showMessage('Please fill the password field', 'Error');
+		} else {
+			let result: IResult;
+			try {
+				result = await this.auth.signIn(this.user.email, this.field_1);
+			}catch(err) {
+				console.error(err);
+				result = {ok: false, error: "Unexpected error" };
+			}
+			if(!result || !result.ok) {
+				this.notificator.showMessage("Incorrect password", "Error:");
+			} else {
+				if(this.mode == Constants.MODE_EDIT.CHANGE_PASSWORD_CONFIRM_PASS) {
+					this.configureMode(Constants.MODE_EDIT.CHANGE_PASSWORD);
+				}
+			}
+		}
+		
 	}
 
 	async changePassword() {
@@ -90,7 +126,7 @@ export class EditUserPage {
 			resultUpdate = { ok: false, error: 'Unexpected error.'};
 		}
 
-		if (!resultUpdate || !result.ok) {
+		if (!resultUpdate || !resultUpdate.ok) {
 			this.notificator.showUnexpectedError(resultUpdate.error);
 		} else {
 			this.notificator.showMessage("Password updated correctly", "Password updated");

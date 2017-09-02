@@ -5,7 +5,7 @@ export class User{
     id?: number;
     userName: string;
     email: string;
-    password: string;
+    password?: string;
 
     constructor(json?: any){
         this.id = json && json.id ? json.id : null;
