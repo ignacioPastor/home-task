@@ -22,7 +22,6 @@ export class UserProvider {
 		return this.http.post(`${Constants.SERVER_IP}/setting-utils/checkcode`, data, new RequestOptions(options)).map(response => response.json()).toPromise();
 	}
 
-
 	async removeUser(userID) {
 		let headers = new Headers();
 		headers.append("Content-Type", 'application/json');

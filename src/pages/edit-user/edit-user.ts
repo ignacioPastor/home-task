@@ -7,6 +7,7 @@ import { UserProvider } from './../../providers/user/user';
 import { AuthProvider } from './../../providers/auth/auth';
 import { NotificationProvider } from './../../providers/notification/notification';
 import { User } from './../../models/User';
+import { LoginPage } from '../login/login';
 
 import { Storage } from '@ionic/storage';
 
@@ -16,8 +17,6 @@ import { Storage } from '@ionic/storage';
 	templateUrl: 'edit-user.html',
 })
 export class EditUserPage {
-
-	user: User;
 
 	field_1: string;
 	field_2: string;
@@ -31,13 +30,16 @@ export class EditUserPage {
 	identifyKey: string;
 	emailUser: string;
 
+	user: User;
+
 
 	constructor(public navCtrl: NavController, public navParams: NavParams, private userProvider: UserProvider,
 		private notificator: NotificationProvider, private auth: AuthProvider, private storage: Storage) {
 		this.mode = this.navParams.get('mode');
 	}
 
-	ionViewDidLoad() {
+	async ionViewDidLoad() {
+		this.user = new User(await this.storage.get('user'));
 		this.configureMode(this.mode);
 	}
 
@@ -69,7 +71,14 @@ export class EditUserPage {
 			this.placeholder_1 = "Current password";
 			this.showField_2 = false;
 			this.typeField_1 = 'password';
-			this.user = new User(await this.storage.get('user'));
+			// this.emailUser = (await this.storage.get('user')).email;
+			this.emailUser = this.user.email;
+		} else if (myMode == Constants.MODE_EDIT.REMOVE_ACCOUNT) {
+			this.infoText = "Remove Account. Please enter your password to authenticate.";
+			this.placeholder_1 = "Password";
+			this.showField_2 = false;
+			this.typeField_1 = 'password';
+			// this.emailUser = (await this.storage.get('user')).email;
 			this.emailUser = this.user.email;
 		}
 	}
@@ -85,6 +94,8 @@ export class EditUserPage {
 			this.changePassword();
 		} else if (this.mode == Constants.MODE_EDIT.CHANGE_PASSWORD_CONFIRM_PASS) {
 			this.checkCorrectPassword();
+		} else if(this.mode == Constants.MODE_EDIT.REMOVE_ACCOUNT) {
+			this.checkCorrectPassword();
 		}
 	}
 
@@ -94,7 +105,7 @@ export class EditUserPage {
 		} else {
 			let result: IResult;
 			try {
-				result = await this.auth.signIn(this.user.email, this.field_1);
+				result = await this.auth.signIn(this.emailUser, this.field_1);
 			}catch(err) {
 				console.error(err);
 				result = {ok: false, error: "Unexpected error" };
@@ -104,10 +115,28 @@ export class EditUserPage {
 			} else {
 				if(this.mode == Constants.MODE_EDIT.CHANGE_PASSWORD_CONFIRM_PASS) {
 					this.configureMode(Constants.MODE_EDIT.CHANGE_PASSWORD);
+				} else if (this.mode == Constants.MODE_EDIT.REMOVE_ACCOUNT) {
+					this.confirmRemoveAccount();
 				}
 			}
 		}
-		
+
+	}
+
+	confirmRemoveAccount(){
+		let myYesHandler = async () => {
+			try {
+				await this.userProvider.removeUser(this.user.id);
+				this.signOut();
+			} catch (err) {
+				this.notificator.showUnexpectedError();
+			}
+		};
+		let myNoHandler = () => {
+			console.log("Choosen no");
+		};
+
+		this.notificator.showConfirm('Are you sure about delete your account?', myYesHandler, myNoHandler);
 	}
 
 	async changePassword() {
@@ -147,7 +176,7 @@ export class EditUserPage {
 			this.notificator.showError(result.error);
 		} else {
 
-			
+
 
 			this.configureMode(Constants.MODE_EDIT.CHANGE_PASSWORD);
 		}
@@ -177,6 +206,12 @@ export class EditUserPage {
 			}
 		}
 
+	}
+
+	async signOut() {
+		await this.storage.remove('user');
+		await this.storage.remove('user');
+		this.navCtrl.setRoot(LoginPage);
 	}
 
 }

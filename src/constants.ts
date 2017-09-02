@@ -9,6 +9,7 @@ export class Constants {
         FORGOT_PASSWORD: 'forgot_password',
         FP_ASK_CODE: 'fp_askCode',
         CHANGE_PASSWORD: 'change_password',
-        CHANGE_PASSWORD_CONFIRM_PASS: 'change_password_previously_confirm_old'
+        CHANGE_PASSWORD_CONFIRM_PASS: 'change_password_previously_confirm_old',
+        REMOVE_ACCOUNT: 'remove_account'
     }
 }

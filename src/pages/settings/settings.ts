@@ -25,11 +25,11 @@ export class SettingsPage {
 	onClickChangePassword() {
 		console.log("onClickChangePassword()");
 		this.navCtrl.push(EditUserPage, { mode: Constants.MODE_EDIT.CHANGE_PASSWORD_CONFIRM_PASS });
-
 	}
 
 	onClickRemoveAccount() {
 		console.log("onClickRemoveAccount()");
+		this.navCtrl.push(EditUserPage, { mode: Constants.MODE_EDIT.REMOVE_ACCOUNT });
 	}
 
 	onClickChangeEmail() {

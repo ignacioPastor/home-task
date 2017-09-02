@@ -40,4 +40,29 @@ export class NotificationProvider {
 		console.dir(error);
 	}
 
+		/**
+	 * Show box asking confirmation
+	 * @param myYesHandler function received and used in case the user select yes option
+	 * @param myNoHandler function received and used in case the user select no option
+	 */
+	showConfirm(myMessage, myYesHandler, myNoHandler) {
+		let confirm = this.alertCtrl.create({
+			title: 'Caution!',
+			message: myMessage,
+			buttons: [
+				{
+					text: 'Disagree',
+					handler: myNoHandler
+				},
+				{
+					text: 'Agree',
+					handler: myYesHandler
+				}
+			]
+		});
+
+		// Show the box asking confirmation
+		confirm.present();
+	}	// end Confirm
+
 }

@@ -8,6 +8,7 @@ import { ToggleTypeSetData } from '../toggle-type-set-data/toggle-type-set-data'
 import { SignupPage } from '../signup/signup';
 import { EditUserPage } from '../edit-user/edit-user';
 import { Constants } from './../../constants';
+import { User } from './../../models/User';
 
 
 
@@ -21,7 +22,8 @@ export class LoginPage {
 	email: string;
 	password: string;
 
-	constructor(public navCtrl: NavController, public navParams: NavParams, public auth: AuthProvider, private storage: Storage, private notificator: NotificationProvider) {
+	constructor(public navCtrl: NavController, public navParams: NavParams, public auth: AuthProvider,
+			private storage: Storage, private notificator: NotificationProvider) {
 	}
 
 
