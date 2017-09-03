@@ -17,6 +17,7 @@ import { SetDataAssigned } from '../pages/set-data-assigned/set-data-assigned';
 import { ToggleTypeSetData } from '../pages/toggle-type-set-data/toggle-type-set-data';
 import { EditUserPage } from '../pages/edit-user/edit-user';
 import { SettingsPage } from '../pages/settings/settings';
+import { ReportBugPage } from '../pages/report-bug/report-bug';
 
 import { NavbarComponent } from '../components/navbar/navbar';
 
@@ -35,7 +36,8 @@ import { UserProvider } from '../providers/user/user';
     NavbarComponent,
     LoginPage,
     SignupPage,
-    SettingsPage
+    SettingsPage,
+    ReportBugPage
   ],
   imports: [
     BrowserModule,
@@ -53,7 +55,8 @@ import { UserProvider } from '../providers/user/user';
     ToggleTypeSetData,
     LoginPage,
     SignupPage,
-    SettingsPage
+    SettingsPage,
+    ReportBugPage
   ],
   providers: [
     StatusBar,

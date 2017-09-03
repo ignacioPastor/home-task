@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { EditUserPage } from './../edit-user/edit-user';
+import { ReportBugPage } from './../report-bug/report-bug';
 import { Constants } from './../../constants';
 import { Storage } from '@ionic/storage';
 
@@ -21,7 +22,7 @@ export class SettingsPage {
 
 	onClickReportBug() {
 		console.log("onClickReportBug()");
-
+		this.navCtrl.push(ReportBugPage);
 	}
 
 	onClickChangePassword() {

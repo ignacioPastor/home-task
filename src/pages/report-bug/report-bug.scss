@@ -1,0 +1,25 @@
+page-report-bug {
+    #mainWrapper{
+        margin-top: 20px;
+
+        .subtitle {
+            color: color($colors, secondary);
+            font-weight: 600;
+            font-size: 14pt;
+            margin: 10px 0px;
+        }
+        ion-textarea {
+            box-shadow: 2px 2px 5px #888888;
+            height: 30vh;
+            min-height: 200px;
+            padding-top: 5px;
+            margin-top: 20px;
+        }
+
+        #buttonWrapper {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-around;
+        }
+    }
+}
