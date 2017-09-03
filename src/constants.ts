@@ -10,6 +10,8 @@ export class Constants {
         FP_ASK_CODE: 'fp_askCode',
         CHANGE_PASSWORD: 'change_password',
         CHANGE_PASSWORD_CONFIRM_PASS: 'change_password_previously_confirm_old',
-        REMOVE_ACCOUNT: 'remove_account'
+        REMOVE_ACCOUNT: 'remove_account',
+        CHANGE_MAIL: 'change_mail',
+        CM_ASK_CODE: 'cm_askCode'
     }
 }

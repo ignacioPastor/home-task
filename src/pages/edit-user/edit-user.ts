@@ -71,15 +71,23 @@ export class EditUserPage {
 			this.placeholder_1 = "Current password";
 			this.showField_2 = false;
 			this.typeField_1 = 'password';
-			// this.emailUser = (await this.storage.get('user')).email;
 			this.emailUser = this.user.email;
 		} else if (myMode == Constants.MODE_EDIT.REMOVE_ACCOUNT) {
 			this.infoText = "Remove Account. Please enter your password to authenticate.";
 			this.placeholder_1 = "Password";
 			this.showField_2 = false;
 			this.typeField_1 = 'password';
-			// this.emailUser = (await this.storage.get('user')).email;
 			this.emailUser = this.user.email;
+		} else if (myMode == Constants.MODE_EDIT.CHANGE_MAIL) {
+			this.infoText = "Please enter your new email";
+			this.placeholder_1 = "New Email";
+			this.showField_2 = false;
+			this.typeField_1 = 'text';
+		} else if (myMode == Constants.MODE_EDIT.CM_ASK_CODE) {
+			this.infoText = "Please enter the code sent to the new mail";
+			this.placeholder_1 = "Code";
+			this.showField_2 = false;
+			this.typeField_1 = 'text';
 		}
 	}
 
@@ -96,7 +104,32 @@ export class EditUserPage {
 			this.checkCorrectPassword();
 		} else if(this.mode == Constants.MODE_EDIT.REMOVE_ACCOUNT) {
 			this.checkCorrectPassword();
+		} else if (this.mode == Constants.MODE_EDIT.CHANGE_MAIL) {
+			this.manageChangeMail();
+		} else if (this.mode == Constants.MODE_EDIT.CM_ASK_CODE) {
+			this.checkCode(Constants.MODE_EDIT.CM_ASK_CODE);
 		}
+	}
+
+	async manageChangeMail(){
+		if(!this.field_1 || this.field_1.length == 0) {
+			this.notificator.showError("Please fill the email field");
+		}else {
+			this.emailUser = this.field_1;
+			let result: IResult;
+			try {
+				result = await this.userProvider.sendCode(this.field_1, false)
+			}catch(err){
+				result = { ok: false, error: 'Unexpected error' };
+			}
+			if(!result || !result.ok) {
+				this.notificator.showError(result.error);
+			} else {
+				this.identifyKey = result.identifyKey;
+				this.configureMode(Constants.MODE_EDIT.CM_ASK_CODE);
+			}
+		}
+		
 	}
 
 	async checkCorrectPassword() {
@@ -151,7 +184,7 @@ export class EditUserPage {
 		try{
 			resultUpdate = await this.userProvider.updatePassword(this.emailUser, this.field_1);
 		}catch(err){
-			console.log(err);
+			console.error(err);
 			resultUpdate = { ok: false, error: 'Unexpected error.'};
 		}
 
@@ -168,7 +201,7 @@ export class EditUserPage {
 		try {
 			result = await this.userProvider.checkCode(this.field_1, this.identifyKey);
 		} catch (err) {
-			console.log(err);
+			console.error(err);
 			result = { ok: false, error: 'Unexpected error.' };
 		}
 
@@ -176,9 +209,30 @@ export class EditUserPage {
 			this.notificator.showError(result.error);
 		} else {
 
+			if(originMode == Constants.MODE_EDIT.FP_ASK_CODE) {
+				this.configureMode(Constants.MODE_EDIT.CHANGE_PASSWORD);
+			} else if (originMode == Constants.MODE_EDIT.CM_ASK_CODE) {
+				this.changeMail();
+			}
+		}
+	}
 
-
-			this.configureMode(Constants.MODE_EDIT.CHANGE_PASSWORD);
+	async changeMail() {
+		let result: IResult;
+		try {
+			result = await this.userProvider.updateUser(this.user, this.emailUser);
+		} catch(err) {
+			result = { ok: false, error: 'Unexpected error' };
+		}
+		if(!result || !result.ok) {
+			this.notificator.showError(result.error);
+		} else {
+			await this.storage.remove('user');
+			await this.storage.remove('user');
+			this.user.email = this.emailUser;
+			this.storage.set('user', this.user);
+			this.notificator.showMessage("Email updated successfully", "Email update");
+			this.navCtrl.pop();
 		}
 	}
 
@@ -190,10 +244,10 @@ export class EditUserPage {
 			this.emailUser = this.field_1;
 			let result: IResult;
 			try {
-				result = await this.userProvider.sendCode(this.field_1);
+				result = await this.userProvider.sendCode(this.field_1, true);
 
 			} catch (err) {
-				console.log(err);
+				console.error(err);
 				result = { ok: false, error: 'Error ocurred.'};
 			}
 

@@ -50,13 +50,23 @@ export class UserProvider {
 		return this.http.post(`${Constants.SERVER_IP}/user/updatepassword`, data, new RequestOptions(options)).map(response => response.json()).toPromise();
 	}
 
-	async sendCode(email: string) {
+	async updateUser(user: User, newEmail: string) {
+		let headers = new Headers();
+		headers.append("Content-Type", 'application/json');
+
+		let options: any = { headers };
+		let data: any = { user, newEmail };
+
+		return this.http.post(`${Constants.SERVER_IP}/user/updateuser`, data, new RequestOptions(options)).map(response => response.json()).toPromise();
+	}
+
+	async sendCode(email: string, checkEmailExistInDatabase: boolean) {
 		let headers = new Headers();
 		headers.append("Content-Type", 'application/json');
 
 		let options: any = { headers };
 
-		return this.http.post(`${Constants.SERVER_IP}/setting-utils/sendcode`, { userEmail: email }, new RequestOptions(options)).map(response => response.json()).toPromise();
+		return this.http.post(`${Constants.SERVER_IP}/setting-utils/sendcode`, { userEmail: email, checkEmailExistInDatabase }, new RequestOptions(options)).map(response => response.json()).toPromise();
 	}
 
 }
