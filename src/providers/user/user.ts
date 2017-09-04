@@ -12,16 +12,6 @@ export class UserProvider {
 
 	}
 
-	async checkCode(myCode: string, myIdentifyKey: string) {
-		let headers = new Headers();
-		headers.append("Content-Type", 'application/json');
-
-		let options: any = { headers };
-		let data: any = { code: myCode,identifyKey: myIdentifyKey };
-
-		return this.http.post(`${Constants.SERVER_IP}/setting-utils/checkcode`, data, new RequestOptions(options)).map(response => response.json()).toPromise();
-	}
-
 	async removeUser(userID) {
 		let headers = new Headers();
 		headers.append("Content-Type", 'application/json');
@@ -58,15 +48,6 @@ export class UserProvider {
 		let data: any = { user, newEmail };
 
 		return this.http.post(`${Constants.SERVER_IP}/user/updateuser`, data, new RequestOptions(options)).map(response => response.json()).toPromise();
-	}
-
-	async sendCode(email: string, checkEmailExistInDatabase: boolean) {
-		let headers = new Headers();
-		headers.append("Content-Type", 'application/json');
-
-		let options: any = { headers };
-
-		return this.http.post(`${Constants.SERVER_IP}/setting-utils/sendcode`, { userEmail: email, checkEmailExistInDatabase }, new RequestOptions(options)).map(response => response.json()).toPromise();
 	}
 
 }

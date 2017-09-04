@@ -24,6 +24,7 @@ import { NavbarComponent } from '../components/navbar/navbar';
 import { NotificationProvider } from '../providers/notification/notification';
 import { AuthProvider } from '../providers/auth/auth';
 import { UserProvider } from '../providers/user/user';
+import { UtilsProvider } from '../providers/utils/utils';
 
 @NgModule({
   declarations: [
@@ -65,7 +66,8 @@ import { UserProvider } from '../providers/user/user';
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     NotificationProvider,
     AuthProvider,
-    UserProvider
+    UserProvider,
+    UtilsProvider
   ]
 })
 export class AppModule {}

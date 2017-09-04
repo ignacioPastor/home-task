@@ -4,12 +4,13 @@ import { Constants } from './../../constants';
 import { Utils } from './../../utils';
 import { IResult } from './../../interfaces/IResult';
 import { UserProvider } from './../../providers/user/user';
+import { UtilsProvider } from './../../providers/utils/utils';
 import { AuthProvider } from './../../providers/auth/auth';
 import { NotificationProvider } from './../../providers/notification/notification';
 import { User } from './../../models/User';
 import { LoginPage } from '../login/login';
-
 import { Storage } from '@ionic/storage';
+
 
 @IonicPage()
 @Component({
@@ -34,7 +35,7 @@ export class EditUserPage {
 
 
 	constructor(public navCtrl: NavController, public navParams: NavParams, private userProvider: UserProvider,
-		private notificator: NotificationProvider, private auth: AuthProvider, private storage: Storage) {
+		private notificator: NotificationProvider, private auth: AuthProvider, private storage: Storage, private utilsProvider: UtilsProvider) {
 		this.mode = this.navParams.get('mode');
 	}
 
@@ -118,7 +119,7 @@ export class EditUserPage {
 			this.emailUser = this.field_1;
 			let result: IResult;
 			try {
-				result = await this.userProvider.sendCode(this.field_1, false)
+				result = await this.utilsProvider.sendCode(this.field_1, false)
 			}catch(err){
 				result = { ok: false, error: 'Unexpected error' };
 			}
@@ -153,7 +154,6 @@ export class EditUserPage {
 				}
 			}
 		}
-
 	}
 
 	confirmRemoveAccount(){
@@ -197,9 +197,10 @@ export class EditUserPage {
 	}
 
 	async checkCode(originMode) {
+
 		let result: IResult;
 		try {
-			result = await this.userProvider.checkCode(this.field_1, this.identifyKey);
+			result = await this.utilsProvider.checkCode(this.field_1, this.identifyKey);
 		} catch (err) {
 			console.error(err);
 			result = { ok: false, error: 'Unexpected error.' };
@@ -244,7 +245,7 @@ export class EditUserPage {
 			this.emailUser = this.field_1;
 			let result: IResult;
 			try {
-				result = await this.userProvider.sendCode(this.field_1, true);
+				result = await this.utilsProvider.sendCode(this.field_1, true);
 
 			} catch (err) {
 				console.error(err);
@@ -259,7 +260,6 @@ export class EditUserPage {
 				this.configureMode(Constants.MODE_EDIT.FP_ASK_CODE);
 			}
 		}
-
 	}
 
 	async signOut() {

@@ -1,12 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { UtilsProvider } from './../../providers/utils/utils';
+import { NotificationProvider } from './../../providers/notification/notification';
+import { Storage } from '@ionic/storage';
 
-/**
- * Generated class for the ReportBugPage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
 @IonicPage()
 @Component({
 	selector: 'page-report-bug',
@@ -14,18 +11,29 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class ReportBugPage {
 
-	contentBug: string = 'testing content of the bug';
+	contentBug: string = '';
 
-	constructor(public navCtrl: NavController, public navParams: NavParams) {
+	constructor(public navCtrl: NavController, public navParams: NavParams, private utilsProvider: UtilsProvider,
+		private storage: Storage, private notificator: NotificationProvider) {
+
 	}
 
-	ionViewDidLoad() {
-		console.log('ionViewDidLoad ReportBugPage');
-	}
+	async onClickSend() {
 
-	onClickSend() {
-		console.log("onClickSend()");
-		
+		if (!this.contentBug || this.contentBug.length == 0) {
+			this.notificator.showError("Please write a description of the bug");
+		} else {
+
+			let result;
+			try {
+				result = await this.utilsProvider.reportBug(this.contentBug, (await this.storage.get("user")).email);
+			} catch (err) {
+				result = { ok: false };
+			}
+	
+			if (result.ok) this.notificator.showMessage("Message sent. Thank you for your report!", "Info");
+			else this.notificator.showError("Error sending your report.")
+		}
 	}
 
 	onClickCancel() {

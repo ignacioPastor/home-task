@@ -3,7 +3,6 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { EditUserPage } from './../edit-user/edit-user';
 import { ReportBugPage } from './../report-bug/report-bug';
 import { Constants } from './../../constants';
-import { Storage } from '@ionic/storage';
 
 
 @IonicPage()
@@ -13,37 +12,23 @@ import { Storage } from '@ionic/storage';
 })
 export class SettingsPage {
 
-	constructor(public navCtrl: NavController, public navParams: NavParams, private storage: Storage) {
-	}
-
-	ionViewDidLoad() {
-		console.log('ionViewDidLoad SettingsPage');
+	constructor(public navCtrl: NavController, public navParams: NavParams) {
 	}
 
 	onClickReportBug() {
-		console.log("onClickReportBug()");
 		this.navCtrl.push(ReportBugPage);
 	}
 
 	onClickChangePassword() {
-		console.log("onClickChangePassword()");
 		this.navCtrl.push(EditUserPage, { mode: Constants.MODE_EDIT.CHANGE_PASSWORD_CONFIRM_PASS });
 	}
 
 	onClickRemoveAccount() {
-		console.log("onClickRemoveAccount()");
 		this.navCtrl.push(EditUserPage, { mode: Constants.MODE_EDIT.REMOVE_ACCOUNT });
 	}
 
 	onClickChangeEmail() {
-		console.log("onClickChangeEmail()");
 		this.navCtrl.push(EditUserPage, { mode: Constants.MODE_EDIT.CHANGE_MAIL });
-	}
-
-	async showUserInternalStorage() {
-		let user = await this.storage.get('user');
-		console.log("User in internal storage");
-		console.log(user);
 	}
 
 }
